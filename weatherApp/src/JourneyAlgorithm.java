@@ -25,7 +25,7 @@ public class JourneyAlgorithm {
 		LocalTime endTime = startTime.plus(duration);
 		
 		int startIndex = (startTime.getHour() - 1) / 3;
-		int endIndex = (endTime.getHour() - 1) / 3;
+		int endIndex = (endTime.getHour() + (endTime.getMinute() > 0 ? 1: 0) - 2) / 3;
 		
 		LocalTime currentTime = startTime;
 		
