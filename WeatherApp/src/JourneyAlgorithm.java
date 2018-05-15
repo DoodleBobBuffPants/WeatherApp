@@ -1,4 +1,3 @@
-/*
 //time imports
 import java.time.LocalTime;
 import java.time.Duration;
@@ -18,18 +17,11 @@ public class JourneyAlgorithm {
 		boolean noValidJourney = true;	//loop condition for finding another journey time to recommend
 		boolean RValid = false;	//boolean identifier for valid journey on the right
 
-
-		LocalTime LTime = startTime.minusHours(1);	//time before the start time
 		LocalTime RTime = startTime.plusHours(1);	//time after the start time
 
 		int RDay = (RTime.getHour() - startTime.getHour() < 0) ? 1 : 0;	//variable for determining which day of the week we are looking at for journeys
 
 		while (noValidJourney) {	//iteration until we find another journey time to recommend - exits when no journey exists
-			//check all times before the start time
-			if (startTime.compareTo(LTime) > 0 && LTime.compareTo(LocalTime.now()) > 0) {	//conditions for going as far back as possible (assume always start at day 0)
-				LValid = validJourney(LTime, duration, preferredWeather, 0, dailyArray);	//check if journey is valid
-				LTime = LTime.minusHours(1);	//adjust time for next iteration
-			}
 
 			//check all times after the start time
 			if (RDay < 5) {	//condition for going as far right as possible
@@ -38,11 +30,6 @@ public class JourneyAlgorithm {
 				RTime = RTime.plusHours(1);	//adjust time for next iteration
 			}
 			//return recommended times if they were found
-			if(RValid) return "There was no journey at the specified time. An alternative is at " + RTime.toString() + (RDay == 0 ? "today" : RDay + " days from now");
-			if(LValid) return "There was no journey at the specified time. An alternative is at " + LTime.toString() + " today";
-
-			if(RDay >= 5 && (startTime.compareTo(LTime) < 0 || LTime.compareTo(LocalTime.now()) < 0)) noValidJourney = false; //updates boolean condition to false if no more times can be checked
-
 			
 			if(RValid) return "There was no journey at the specified time. An alternative is at " + RTime.toString() + (RDay == 0 ? "today" : RDay + " days from now");	//return recommended times if they were found
 			if(RDay >= 5) noValidJourney = false; //updates boolean condition to false if no more times can be checked
@@ -82,4 +69,4 @@ public class JourneyAlgorithm {
 
 	}
 
-}*/
+}

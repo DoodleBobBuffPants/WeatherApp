@@ -7,7 +7,8 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherData {
-
+	
+	//reads in raw JSON
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class city {
         private int id;

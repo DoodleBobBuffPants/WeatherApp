@@ -7,6 +7,8 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class weatherForAThreeHourlyPeriod {
+	
+	//variables corresponding to data from API
     private Date dateAndTime = new Date();
     private LocalTime time;
     private double temp = 0;
@@ -18,7 +20,8 @@ public class weatherForAThreeHourlyPeriod {
     private double windSpeed = 0;
     private double windDirection = 0;
     private double rainAmount = 0;
-
+    
+    //setters and getters for data
     public LocalTime getTime() {
         return time;
     }

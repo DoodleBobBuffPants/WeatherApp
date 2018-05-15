@@ -12,29 +12,28 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class WeatherGet {
-
-    public static void main(String[] args) throws IOException, RequestFailed  {
-    	
-    }
     
     public static WeatherInformationParsed run() throws IOException, RequestFailed {
-    	int timeoutInSeconds = 5;
-        String city = "Chicago";
+    	int timeoutInSeconds = 5;	//connection timeout
+        String city = "Chicago";	//initial location
+        
+        //essentials to make http connection to API
         RequestConfig config = RequestConfig.custom().setConnectTimeout(timeoutInSeconds * 1000).setConnectionRequestTimeout(timeoutInSeconds * 1000).setSocketTimeout(timeoutInSeconds * 1000).build();
         CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
-        ObjectMapper objectMapper = new ObjectMapper();
+        
+        ObjectMapper objectMapper = new ObjectMapper();	//constructs our object from JSON
         HttpGet getCommand = new HttpGet("http://api.openweathermap.org/data/2.5/forecast?q=" + city + ",us&mode=json&appid=3f69dfc43f5609b2b1ff6217eb940866");
-        WeatherData wd = (WeatherData) getContent(WeatherData.class, getCommand, httpClient, objectMapper);
-        WeatherInformationParsed wiP = convertFromWeatherDataToWeatherInformationParse(wd);
+        WeatherData wd = (WeatherData) getContent(WeatherData.class, getCommand, httpClient, objectMapper);	//parse data
+        WeatherInformationParsed wiP = convertFromWeatherDataToWeatherInformationParse(wd);	//cleans the parsed so we can use it as needed
         return wiP;
     }
     
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })	//suppresses type warnings
 	private static Object getContent(Class c, HttpUriRequest getCommand, CloseableHttpClient httpClient, ObjectMapper objectMapper) throws IOException, RequestFailed {
         try {
             HttpResponse httpResponse = httpClient.execute(getCommand);
-            return objectMapper.readValue(EntityUtils.toString(httpResponse.getEntity()), c);
-        } catch(SocketTimeoutException t) {
+            return objectMapper.readValue(EntityUtils.toString(httpResponse.getEntity()), c);	//parses json into our object which has necessary getters and setters
+        } catch(SocketTimeoutException t) {	//connection errors
             throw new RequestFailed("Request has timed out");
         } catch(org.apache.http.NoHttpResponseException p) {
             throw new RequestFailed("API Failed");
@@ -42,14 +41,18 @@ public class WeatherGet {
     }
 
     private static WeatherInformationParsed convertFromWeatherDataToWeatherInformationParse (WeatherData wd) {
+    	//clean parsed JSON into usable information
         WeatherInformationParsed toReturn = new WeatherInformationParsed();
+        //location data
         toReturn.setCityName(wd.getCity().getName());
         toReturn.setCountryName(wd.getCity().getCountry());
         weatherForADay[] newArray = new weatherForADay[5];
         for (int i = 0; i < newArray.length; i++) {
-            newArray[i] = new weatherForADay();
+            newArray[i] = new weatherForADay();	//objects to store information per day
         }
         for (int i = 0; i < wd.getList().size(); i++) {
+        	
+        	//adds all of the data
             Date todaysDate = new Date();
             Date dateOfWeather = wd.getList().get(i).getDate();
             int index = (int) ChronoUnit.DAYS.between( todaysDate.toInstant() ,  dateOfWeather.toInstant() );
@@ -67,6 +70,8 @@ public class WeatherGet {
             thisPeriod.setRainAmount(thisPeriodOld.getRain().getAmount());
             newArray[index].getList().add(thisPeriod);
         }
+        
+        //return the new object
         toReturn.setWeatherPerDay(newArray);
         return toReturn;
     }

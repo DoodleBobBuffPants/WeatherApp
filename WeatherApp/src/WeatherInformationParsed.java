@@ -1,5 +1,7 @@
-
 public class WeatherInformationParsed {
+	
+	//class to use parsed JSON data
+	//this is essentially a 5-day structure to view 5 days of weather information
     private String cityName = "";
     private String countryName = "";
     private weatherForADay[] weatherPerDay = new weatherForADay[5];
