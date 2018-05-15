@@ -1,11 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class TodayScreen extends JFrame{
+public class TodayScreen extends JPanel {
 
 
     public TodayScreen(){
-        super("Todays Weather");
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
         add(createTop("Monday", 0f, 0f), BorderLayout.NORTH);
@@ -75,9 +74,11 @@ public class TodayScreen extends JFrame{
     }
 
     public static void main(String[] args){
-        JFrame today = new TodayScreen();
-        today.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        today.setSize(500, 1000);
-        today.setVisible(true);
+    	JFrame t = new JFrame("Today's weather");
+        JPanel today = new TodayScreen();
+        t.setContentPane(today);
+        t.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        t.setSize(500, 1000);
+        t.setVisible(true);
     }
 }
