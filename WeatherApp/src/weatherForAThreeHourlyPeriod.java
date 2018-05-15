@@ -1,3 +1,5 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -28,7 +30,10 @@ public class weatherForAThreeHourlyPeriod {
     public String getIcon() {
         return icon;
     }
-
+    public Path getIconPath() {
+    	return Paths.get("resources/" + getIcon() + ".png");
+    }
+    
     public void setIcon(String icon) {
         this.icon = icon;
     }
