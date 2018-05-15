@@ -1,4 +1,3 @@
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.lang.System;
 import java.net.SocketTimeoutException;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class WeatherGet {

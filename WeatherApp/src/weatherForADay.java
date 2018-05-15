@@ -8,7 +8,7 @@ public class weatherForADay {
         return list;
     }
 
-    public void setList(List<weatherForAThreeHourlyPeriod> list) {
-        this.list = list;
+    public void setList(List<weatherForAThreeHourlyPeriod> lst) {
+        this.list = lst;
     }
 }
