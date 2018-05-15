@@ -1,5 +1,3 @@
-import jdk.nashorn.internal.runtime.NumberToString;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,7 +17,7 @@ public class TodayScreen extends JFrame{
         JPanel bottom = new JPanel();
         bottom.setLayout(new GridLayout(1,3));
 
-        ImageIcon back = new ImageIcon("src/resources/cc3backbygoogle.png");
+        ImageIcon back = new ImageIcon("resources/cc3backbygoogle.png");
         JButton backbutton = new JButton(back);
 
 
@@ -33,7 +31,7 @@ public class TodayScreen extends JFrame{
         JPanel center = new JPanel();
         center.setLayout(new GridLayout(8, 2));
         for (Integer i = 0; i < 8; i++){
-            Label time = new Label(new Integer(200 + 300*i).toString() + "   ");
+            Label time = new Label((200 + 300*i) + "   ");
             time.setAlignment(Label.RIGHT);
             center.add(time, i);
             center.add(new Label(i.toString()), i);

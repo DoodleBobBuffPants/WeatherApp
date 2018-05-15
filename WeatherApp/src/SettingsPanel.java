@@ -6,9 +6,17 @@ import java.time.Duration;
 import java.time.LocalTime;
 import com.github.lgooddatepicker.components.TimePicker;
 
-
 public class SettingsPanel extends JPanel {
 
+	private TimePicker timeSelector;
+    private JComboBox<String> durationDropdown;
+    private JComboBox<WeatherEnum> weatherDropdown;
+    private JButton backButton;
+    private JComboBox<Location> locationDropdown;
+
+    private String[] times = {"30 minutes", "1 hour", "1 hour 30 minutes", "2 hours", "2 hours 30 minutes", "3 hours", "3 hours 30 minutes", "4 hours", "4 hours 30 minutes", "5 hours"};
+    private Location[] locations;
+	
     public LocalTime getPreferredTime() {
         return timeSelector.getTime();
     }
@@ -35,15 +43,6 @@ public class SettingsPanel extends JPanel {
     public String getLocationName() {
         return locationDropdown.getItemAt(locationDropdown.getSelectedIndex()).name;
     }
-
-    private TimePicker timeSelector;
-    private JComboBox<String> durationDropdown;
-    private JComboBox<WeatherEnum> weatherDropdown;
-    private JButton backButton;
-    private JComboBox<Location> locationDropdown;
-
-    private String[] times = {"30 minutes", "1 hour", "1 hour 30 minutes", "2 hours", "2 hours 30 minutes", "3 hours", "3 hours 30 minutes", "4 hours", "4 hours 30 minutes", "5 hours"};
-    private Location[] locations;
 
     private static class Location {
         public WeatherData.coord coord;
