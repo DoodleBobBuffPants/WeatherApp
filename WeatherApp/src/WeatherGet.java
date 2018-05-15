@@ -11,6 +11,9 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.lang.System;
 import java.net.SocketTimeoutException;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class WeatherGet {
 
@@ -22,6 +25,7 @@ public class WeatherGet {
         ObjectMapper objectMapper = new ObjectMapper();
         HttpGet getCommand = new HttpGet("http://api.openweathermap.org/data/2.5/forecast?q=" + city + ",us&mode=json&appid=3f69dfc43f5609b2b1ff6217eb940866");
         WeatherData wd = (WeatherData) getContent(WeatherData.class, getCommand, httpClient, objectMapper);
+        WeatherInformationParsed wiP = convertFromWeatherDataToWeatherInformationParse(wd);
         System.out.println("Hello World");
 
     }
@@ -35,5 +39,38 @@ public class WeatherGet {
         } catch(org.apache.http.NoHttpResponseException p) {
             throw new RequestFailed("API Failed");
         }
+    }
+
+    private static WeatherInformationParsed convertFromWeatherDataToWeatherInformationParse (WeatherData wd)
+    {
+        WeatherInformationParsed toReturn = new WeatherInformationParsed();
+        toReturn.setCityName(wd.getCity().getName());
+        toReturn.setCountryName(wd.getCity().getCountry());
+        weatherForADay[] newArray = new weatherForADay[5];
+        for (int i = 0; i < newArray.length; i++)
+        {
+            newArray[i] = new weatherForADay();
+        }
+        for (int i = 0; i < wd.getList().size(); i++)
+        {
+            Date todaysDate = new Date();
+            Date dateOfWeather = wd.getList().get(i).getDate();
+            int index = (int) ChronoUnit.DAYS.between( todaysDate.toInstant() ,  dateOfWeather.toInstant() );
+            weatherForAThreeHourlyPeriod thisPeriod = new weatherForAThreeHourlyPeriod();
+            WeatherData.weatherDetails thisPeriodOld = wd.getList().get(i);
+            thisPeriod.setDateAndTime(thisPeriodOld.getDate());
+            thisPeriod.setTemp(thisPeriodOld.getMain().getTemp());
+            thisPeriod.setTemp_max(thisPeriodOld.getMain().getTemp_max());
+            thisPeriod.setTemp_min(thisPeriodOld.getMain().getTemp_min());
+            thisPeriod.setMain(thisPeriodOld.getWeather().get(0).getMain());
+            thisPeriod.setDescription(thisPeriodOld.getWeather().get(0).getDescription());
+            thisPeriod.setIcon(thisPeriodOld.getWeather().get(0).getIcon());
+            thisPeriod.setWindSpeed(thisPeriodOld.getWind().getSpeed());
+            thisPeriod.setWindDirection(thisPeriodOld.getWind().getDeg());
+            thisPeriod.setRainAmount(thisPeriodOld.getRain().getAmount());
+            newArray[index].getList().add(thisPeriod);
+        }
+        toReturn.setWeatherPerDay(newArray);
+        return toReturn;
     }
 }

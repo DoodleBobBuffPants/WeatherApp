@@ -27,117 +27,117 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="module-library">
-      <library name="jackson-annotations-2.9.0.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jackson-annotations-2.9.0.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/jna-platform-4.4.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="jackson-core-2.9.5.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jackson-core-2.9.5.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/jna-4.4.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="jackson-databind-2.9.5.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jackson-databind-2.9.5.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/jackson-databind-2.9.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="commons-codec-1.10.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/commons-codec-1.10.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/jackson-core-2.9.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="commons-logging-1.2.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/commons-logging-1.2.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/jackson-annotations-2.9.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="fluent-hc-4.5.5.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/fluent-hc-4.5.5.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/httpmime-4.5.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="httpclient-4.5.5.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpclient-4.5.5.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/httpcore-4.4.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="httpclient-cache-4.5.5.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpclient-cache-4.5.5.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/httpclient-win-4.5.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="httpclient-win-4.5.5.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpclient-win-4.5.5.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/httpclient-cache-4.5.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="httpcore-4.4.9.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpcore-4.4.9.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/httpclient-4.5.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="httpmime-4.5.5.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpmime-4.5.5.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/fluent-hc-4.5.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="jna-4.4.0.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jna-4.4.0.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/commons-logging-1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="jna-platform-4.4.0.jar">
+      <library>
         <CLASSES>
-          <root url="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jna-platform-4.4.0.jar" />
+          <root url="jar://$MODULE_DIR$/Dependencies/commons-codec-1.10.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
