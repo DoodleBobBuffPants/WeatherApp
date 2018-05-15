@@ -57,9 +57,9 @@ public class WeatherGet {
             weatherForAThreeHourlyPeriod thisPeriod = new weatherForAThreeHourlyPeriod();
             WeatherData.weatherDetails thisPeriodOld = wd.getList().get(i);
             thisPeriod.setDateAndTime(thisPeriodOld.getDate());
-            thisPeriod.setTemp(thisPeriodOld.getMain().getTemp());
-            thisPeriod.setTemp_max(thisPeriodOld.getMain().getTemp_max());
-            thisPeriod.setTemp_min(thisPeriodOld.getMain().getTemp_min());
+            thisPeriod.setTemp(Math.floor((thisPeriodOld.getMain().getTemp() - 273.05) * 100) / 100);
+            thisPeriod.setTemp_max(Math.floor((thisPeriodOld.getMain().getTemp_max() - 273.05) * 100) / 100);
+            thisPeriod.setTemp_min(Math.floor((thisPeriodOld.getMain().getTemp_min() - 273.05) * 100) / 100);
             thisPeriod.setMain(thisPeriodOld.getWeather().get(0).getMain());
             thisPeriod.setDescription(thisPeriodOld.getWeather().get(0).getDescription());
             thisPeriod.setIcon(thisPeriodOld.getWeather().get(0).getIcon());
