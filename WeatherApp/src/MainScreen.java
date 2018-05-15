@@ -13,10 +13,11 @@ public class MainScreen {
     private JButton NextDay3Btn;
     private JButton NextDay4Btn;
     private JButton[] nextWeekBtns;
+    //Placeholder Data
     private final String SETTINGS_ICON_PATH = "resources/settings-cog.png";
-    private final String SUN_ICON_PATH = "resources/sun.png";
-    private final String DAILY_ICON_PATH = "resources/DailyWeather.png";
-    private final String TODAY_ICON_PATH = "resources/TodayWeather.png";
+    private final String SUN_ICON_PATH = "resources/settings-cog.png";
+    private final String DAILY_ICON_PATH = "resources/settings-cog.png";
+    private final String TODAY_ICON_PATH = "resources/settings-cog.png";
     private int CURRENT_DAY_OFFSET = 0;
 
     /**
