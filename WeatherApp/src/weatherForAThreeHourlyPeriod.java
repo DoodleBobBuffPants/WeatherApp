@@ -1,7 +1,12 @@
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class weatherForAThreeHourlyPeriod {
     private Date dateAndTime = new Date();
+    private LocalTime time;
     private double temp = 0;
     private double temp_min = 0;
     private double temp_max = 0;
@@ -11,6 +16,14 @@ public class weatherForAThreeHourlyPeriod {
     private double windSpeed = 0;
     private double windDirection = 0;
     private double rainAmount = 0;
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
 
     public String getIcon() {
         return icon;
@@ -65,7 +78,11 @@ public class weatherForAThreeHourlyPeriod {
     }
 
     public void setDateAndTime(Date dateAndTime) {
+
         this.dateAndTime = dateAndTime;
+        Instant instant = Instant.ofEpochMilli(dateAndTime.getTime());
+        LocalTime res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
+        setTime(res);
     }
 
     public double getRainAmount() {
