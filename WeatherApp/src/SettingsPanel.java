@@ -18,6 +18,7 @@ public class SettingsPanel extends JPanel {
     private Location[] locations;
 	
     protected static JFrame f;
+    protected static SettingsPanel p;
     
     public LocalTime getPreferredTime() {
         return timeSelector.getTime();
@@ -107,10 +108,10 @@ public class SettingsPanel extends JPanel {
         addCenteredComponent(locationDropdown);
 
     }
-
+    
     public static void main(String[] args) {
         f = new JFrame("Test");
-        SettingsPanel p = new SettingsPanel();
+        p = new SettingsPanel();
         f.setContentPane(p);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(800, 600);

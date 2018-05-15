@@ -27,8 +27,7 @@ public class MainScreen {
 
     //Following three methods will take care of screen transitions
     private void launchSettingsScreen() {
-    	//frame.setVisible(false);
-    	//SettingsPanel.f.setVisible(true);
+    	//frame.setContentPane(SettingsPanel.p);
     }
 
     private void launchJourneyScreen() {
