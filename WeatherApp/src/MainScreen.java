@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class MainScreen {
     private JButton settingButton;
-    public JPanel panelMain;
+    private JPanel panelMain;
     private JButton checkJourneyButton;
     private JButton todayButton;
     private JButton NextDay1Btn;
