@@ -1,22 +1,16 @@
 //time imports
 import java.time.LocalTime;
-
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
-
 import java.time.Duration;
+
 public class JourneyAlgorithm {
 	
 	public static void main(String[] args) {
 		//check for a valid journey by inspecting the weather in all periods of time for the preferred duration, and recommending alternatives if the preferred is unachievable
 	}
 
-	public static String checkJourney(LocalTime startTime, Duration duration, WeatherEnum preferredWeather, WeatherData weeklyWeather) {
+	public static String checkJourney(LocalTime startTime, Duration duration, WeatherEnum preferredWeather, WeatherInformationParsed weeklyWeather) {
 		
-		DailyWeatherObj dailyArray[] = weeklyWeather.dailyArray;	//array storing weather data for each day of the week as objects within an object for the week
+		WeatherForADay dailyArray[] = weeklyWeather.getWeatherPerDay();	//array storing weather data for each day of the week as objects within an object for the week
 		if (validJourney(startTime, duration, preferredWeather, 0, dailyArray)) return "You have a valid journey";	//notifies the user of a valid journey as per preferences
 		
 		//variables for use in recommending a journey
