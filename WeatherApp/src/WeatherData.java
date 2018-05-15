@@ -192,8 +192,8 @@ public class WeatherData {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class wind {
-        private double speed;
-        private double deg;
+        private double speed = 0;
+        private double deg = 0;
 
         public double getDeg() {
             return deg;
@@ -217,7 +217,7 @@ public class WeatherData {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class rain {
-        private double amount;
+        private double amount = 0;
 
         @JsonProperty("3h")
         public double getAmount() {

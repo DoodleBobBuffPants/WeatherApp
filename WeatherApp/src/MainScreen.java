@@ -21,26 +21,21 @@ public class MainScreen {
     private final String TODAY_ICON_PATH = "resources/settings-cog.png";
     private int CURRENT_DAY_OFFSET = 0;
 
-    /**
-     * Following three methods will take care of screen transitions
-     */
+    //Following three methods will take care of screen transitions
     private void launchSettingsScreen() {
+    	
     }
 
     private void launchJourneyScreen() {
+    	
     }
 
     private void launchDailyScreen(JButton btn) {
+    	
     }
 
-
-    /**
-     * @param btn - JButton Object
-     * Turns background of Jbuttons transparent
-     *
-     */
-    private void makeTransparent(JButton btn){
-
+     //Turns background of Jbuttons transparent
+    private void makeTransparent(JButton btn) {
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
