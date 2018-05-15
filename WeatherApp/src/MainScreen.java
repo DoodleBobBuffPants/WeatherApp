@@ -104,7 +104,7 @@ public class MainScreen {
         frame = new JFrame("MainScreen");
         frame.setContentPane((new MainScreen()).panelMain);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(600, 800);
         frame.setVisible(true);
     }
 

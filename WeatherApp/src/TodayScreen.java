@@ -78,7 +78,7 @@ public class TodayScreen extends JPanel {
         JPanel today = new TodayScreen();
         t.setContentPane(today);
         t.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        t.setSize(500, 1000);
+        t.setSize(600, 800);
         t.setVisible(true);
     }
 }

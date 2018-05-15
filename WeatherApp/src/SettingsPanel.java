@@ -89,7 +89,7 @@ public class SettingsPanel extends JPanel {
         locations[1] = new Location("Manchester", 53.4808, 2.2426);
         locations[2] = new Location("Liverpool", 53.4084, 2.9916);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new GridLayout(8, 1));
 
         addLabel("Preferred Time");
         timeSelector = new TimePicker();
@@ -110,12 +110,12 @@ public class SettingsPanel extends JPanel {
     }
     
     public static void main(String[] args) {
-        f = new JFrame("Test");
+        f = new JFrame("Settings");
         p = new SettingsPanel();
         f.setContentPane(p);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(800, 600);
-        f.pack();
+        f.setSize(600, 800);
+        p.setSize(600, 800);
         f.setVisible(true);
 
         f.addWindowListener(new WindowAdapter() {
