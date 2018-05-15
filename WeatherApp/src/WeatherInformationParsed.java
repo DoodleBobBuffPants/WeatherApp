@@ -58,6 +58,10 @@ public class WeatherInformationParsed {
         public String getIcon() {
             return icon;
         }
+        
+        public String getIconPath() {
+        	return "resources/" + getIcon() + ".png";
+        }
 
         public void setIcon(String icon) {
             this.icon = icon;
