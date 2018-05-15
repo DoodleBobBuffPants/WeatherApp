@@ -55,7 +55,7 @@ public class TodayScreen extends JFrame{
 
         //Adds Image Icon
         JPanel imageIcon = new JPanel();
-        ImageIcon todayIcon = new ImageIcon("src/resources/01d.png");
+        ImageIcon todayIcon = new ImageIcon("resources/01d.png");
         imageIcon.add(new JLabel(todayIcon));
         imageIcon.setAlignmentX(Component.RIGHT_ALIGNMENT);
         center.add(imageIcon);
