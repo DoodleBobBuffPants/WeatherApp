@@ -12,6 +12,7 @@ public class MainScreen {
     private JButton NextDay2Btn;
     private JButton NextDay3Btn;
     private JButton NextDay4Btn;
+    private WeatherData weatherData;
     private JButton[] nextWeekBtns;
     //Placeholder Data
     private final String SETTINGS_ICON_PATH = "resources/settings-cog.png";
