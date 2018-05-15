@@ -17,6 +17,8 @@ public class SettingsPanel extends JPanel {
     private String[] times = {"30 minutes", "1 hour", "1 hour 30 minutes", "2 hours", "2 hours 30 minutes", "3 hours", "3 hours 30 minutes", "4 hours", "4 hours 30 minutes", "5 hours"};
     private Location[] locations;
 	
+    protected static JFrame f;
+    
     public LocalTime getPreferredTime() {
         return timeSelector.getTime();
     }
@@ -107,7 +109,7 @@ public class SettingsPanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame f = new JFrame("Test");
+        f = new JFrame("Test");
         SettingsPanel p = new SettingsPanel();
         f.setContentPane(p);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
