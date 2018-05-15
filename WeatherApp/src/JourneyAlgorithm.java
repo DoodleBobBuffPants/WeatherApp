@@ -15,7 +15,7 @@ public class JourneyAlgorithm {
 		//check for a valid journey by inspecting the weather in all periods of time for the preferred duration, and recommending alternatives if the preferred is unachievable
 	}
 
-	public static String checkJourney(LocalTime startTime, Duration duration, WeatherEnum preferredWeather, WeeklyWeatherObj weeklyWeather) {
+	public static String checkJourney(LocalTime startTime, Duration duration, WeatherEnum preferredWeather, WeatherData weeklyWeather) {
 		
 		DailyWeatherObj dailyArray[] = weeklyWeather.dailyArray;	//array storing weather data for each day of the week as objects within an object for the week
 		if (validJourney(startTime, duration, preferredWeather, 0, dailyArray)) return "You have a valid journey";	//notifies the user of a valid journey as per preferences
