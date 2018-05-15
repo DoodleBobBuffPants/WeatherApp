@@ -291,6 +291,4 @@ public class WeatherData {
         this.list = list;
     }
 
-
-
 }

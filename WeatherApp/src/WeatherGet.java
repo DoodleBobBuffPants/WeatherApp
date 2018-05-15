@@ -1,4 +1,3 @@
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -15,18 +14,22 @@ import java.net.SocketTimeoutException;
 public class WeatherGet {
 
     public static void main(String[] args) throws IOException, RequestFailed  {
-        int timeoutInSeconds = 5;
+
+    }
+    
+    public static WeatherData getWeather() throws IOException, RequestFailed {
+    	int timeoutInSeconds = 5;
         String city = "Chicago";
         RequestConfig config = RequestConfig.custom().setConnectTimeout(timeoutInSeconds * 1000).setConnectionRequestTimeout(timeoutInSeconds * 1000).setSocketTimeout(timeoutInSeconds * 1000).build();
         CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
         ObjectMapper objectMapper = new ObjectMapper();
         HttpGet getCommand = new HttpGet("http://api.openweathermap.org/data/2.5/forecast?q=" + city + ",us&mode=json&appid=3f69dfc43f5609b2b1ff6217eb940866");
         WeatherData wd = (WeatherData) getContent(WeatherData.class, getCommand, httpClient, objectMapper);
-        System.out.println("Hello World");
-
+        return wd;
     }
     
-    private static Object getContent(Class c, HttpUriRequest getCommand, CloseableHttpClient httpClient, ObjectMapper objectMapper) throws IOException, RequestFailed {
+    @SuppressWarnings("unchecked")
+	private static Object getContent(@SuppressWarnings("rawtypes") Class c, HttpUriRequest getCommand, CloseableHttpClient httpClient, ObjectMapper objectMapper) throws IOException, RequestFailed {
         try {
             HttpResponse httpResponse = httpClient.execute(getCommand);
             return objectMapper.readValue(EntityUtils.toString(httpResponse.getEntity()), c);
