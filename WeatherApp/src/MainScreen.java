@@ -12,22 +12,28 @@ public class MainScreen {
     private JButton NextDay2Btn;
     private JButton NextDay3Btn;
     private JButton NextDay4Btn;
-    private WeatherData weatherData;
+    //private WeatherData weatherData;
     private JButton[] nextWeekBtns;
+    
+    private static JFrame frame;
+    private static WeatherInformationParsed wiP;
+    
     //Placeholder Data
     private final String SETTINGS_ICON_PATH = "resources/settings-cog.png";
-    private final String SUN_ICON_PATH = "resources/settings-cog.png";
+    //private final String SUN_ICON_PATH = "resources/settings-cog.png";
     private final String DAILY_ICON_PATH = "resources/settings-cog.png";
     private final String TODAY_ICON_PATH = "resources/settings-cog.png";
     private int CURRENT_DAY_OFFSET = 0;
 
     //Following three methods will take care of screen transitions
     private void launchSettingsScreen() {
-    	
+    	//frame.setContentPane(SettingsPanel.p);
     }
 
     private void launchJourneyScreen() {
-    	
+    	String result = JourneyAlgorithm.checkJourney(Settings.getStartTime(), Settings.getDuration(), Settings.getPreferredWeather(), wiP);
+    	System.out.println(result);
+    	//do something with result;
     }
 
     private void launchDailyScreen(JButton btn) {
@@ -85,10 +91,20 @@ public class MainScreen {
 
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("MainScreen");
+    	
+    	//get parsed weather data
+    	try {
+			wiP = WeatherGet.run();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (RequestFailed e) {
+			System.out.println(e.getMessage());
+		}
+    	
+        frame = new JFrame("MainScreen");
         frame.setContentPane((new MainScreen()).panelMain);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(600, 800);
         frame.setVisible(true);
     }
 
