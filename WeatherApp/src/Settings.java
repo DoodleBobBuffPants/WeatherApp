@@ -3,11 +3,14 @@ import java.time.LocalTime;
 import java.time.Duration;
 //class to store preferences
 public class Settings {
+	
+	//variables for each preference
 	private static LocalTime startTime;
 	private static Duration duration;
 	private static WeatherEnum preferredWeather;
 	private static String location;
 	
+	//getters and setters for each preference
 	public static void setStartTime(LocalTime newStart) {
 		startTime = newStart;
 	}
