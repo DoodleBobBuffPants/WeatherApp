@@ -1,5 +1,5 @@
+//imports to parse JSON
 import com.fasterxml.jackson.annotation.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,12 +11,15 @@ public class WeatherData {
 	//reads in raw JSON
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class city {
+    	
+    	//variables for the attributes
         private int id;
         private String name;
         private coord coord;
         private String country;
         private int population;
-
+        
+        //getters and setters for each attribute
         public int getPopulation() {
             return population;
         }
@@ -57,11 +60,12 @@ public class WeatherData {
             this.coord = coord;
         }
 
-        public city() {}
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class coord {
+    	
+    	//coordinate data is in JSON so is parsed here and skipped in clean-up
         private double lat;
         private double lon;
 
@@ -81,11 +85,12 @@ public class WeatherData {
             this.lon = lon;
         }
 
-        public coord(){}
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class weather {
+    	
+    	//variables for weather data
         private String main;
         private String description;
         private String icon;
@@ -114,11 +119,12 @@ public class WeatherData {
             this.icon = icon;
         }
 
-        public weather(){}
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class weatherDetails {
+    	
+    	//more weather details
         private main main;
         private List<weather> weather;
         private String dt_txt;
@@ -185,14 +191,12 @@ public class WeatherData {
             this.date = date;
         }
 
-
-        public weatherDetails() {
-
-        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class wind {
+    	
+    	//wind data
         private double speed = 0;
         private double deg = 0;
 
@@ -212,12 +216,13 @@ public class WeatherData {
             this.speed = speed;
         }
 
-        public wind(){}
     }
 
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class rain {
+    	
+    	//rain data
         private double amount = 0;
 
         @JsonProperty("3h")
@@ -229,11 +234,12 @@ public class WeatherData {
             this.amount = amount;
         }
 
-        public rain(){}
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class main {
+    	
+    	//main weather data - temperature
         private double temp;
         private double temp_min;
         private double temp_max;
@@ -262,7 +268,6 @@ public class WeatherData {
             this.temp_min = temp_min;
         }
 
-        public main (){}
     }
 
     @JsonProperty("city")
