@@ -85,11 +85,35 @@ public class MainScreen extends JFrame {
             btn.setHorizontalTextPosition(0);
             btn.setVerticalTextPosition(1);
         }
-
+        
         //make remaining icons transparent
         makeTransparent(settingButton);
         makeTransparent(todayButton);
+        
+        //size and positioning of elements
+        int SCREEN_WIDTH = 600;
+        int SCREEN_HEIGHT = 800;
+        panelMain.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        
+        int WIDTH_CENTER = SCREEN_WIDTH / 2;
+        settingButton.setBounds(SCREEN_WIDTH - 50, 0, 50, 50);
+        panelMain.add(settingButton);
 
+        int checkButtonWidth = SCREEN_WIDTH / 2;
+        checkJourneyButton.setBounds(WIDTH_CENTER - checkButtonWidth / 2, SCREEN_HEIGHT / 8, checkButtonWidth, SCREEN_HEIGHT / 4);
+        panelMain.add(checkJourneyButton);
+
+        todayButton.setBounds(WIDTH_CENTER - SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 8, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4);
+        panelMain.add(todayButton);
+
+        for (int i = 0; i < nextWeekBtns.length; i++) {
+            JButton currentBtn = nextWeekBtns[i];
+            currentBtn.setBounds(i * SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 4, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
+            panelMain.add(currentBtn);
+        }
+        
+        panelMain.setVisible(true);	//make content visible
+        
     }
 
     public static void main(String[] args) {
