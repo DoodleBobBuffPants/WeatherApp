@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
@@ -19,7 +20,9 @@ public class CityParse {
 			reader.lines().forEach(new Consumer<String>() {	//iterate through all lines
 				@Override
 				public void accept(String line) {
-					cities.add(line.split("\\s+")[1]);	//adds just city name to set
+					String[] words = line.split("\\s+");	//gets each field of each record
+					String[] city = Arrays.copyOfRange(words, 1, words.length - 4);	//extract just the city name
+					cities.add(String.join(" ", city));	//adds city name to set
 				}
 			});
 		} catch (IOException e) {	//can't open file
