@@ -1,33 +1,35 @@
+//necessary imports
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.TreeSet;
 import com.github.lgooddatepicker.components.TimePicker;
 
 public class SettingsPanel extends JPanel {
-
+	
+	private static SettingsPanel singletonSettingsPanel = null;	//singleton object
+	private MainScreen returnPanel;	//main screen to return to
+	
+	//elements of the interface
 	private TimePicker timeSelector;
     private JComboBox<String> durationDropdown;
     private JComboBox<WeatherEnum> weatherDropdown;
+    private JComboBox<String> locationDropdown;
     private JButton backButton;
-    private JComboBox<Location> locationDropdown;
-
-    private String[] times = {"30 minutes", "1 hour", "1 hour 30 minutes", "2 hours", "2 hours 30 minutes", "3 hours", "3 hours 30 minutes", "4 hours", "4 hours 30 minutes", "5 hours"};
-    private Location[] locations;
-	
-    protected static JFrame f;
-    protected static SettingsPanel p;
     
+    //structure for menus
+    private String[] times = {"30 minutes", "1 hour", "1 hour 30 minutes", "2 hours", "2 hours 30 minutes", "3 hours", "3 hours 30 minutes", "4 hours", "4 hours 30 minutes", "5 hours"};
+    
+    //getters and setters
     public LocalTime getPreferredTime() {
         return timeSelector.getTime();
     }
 
     public Duration getDurationOfCycle() {
         int sel = durationDropdown.getSelectedIndex();
-        //30 minute increments in dropdown, first one is 30 mins, sel starts at 0 -> 30 mins
-        Duration d = Duration.ofMinutes(30 * (sel + 1));
+        Duration d = Duration.ofMinutes(30 * (sel + 1));	//30 minute increments available to select so scales time
         return d;
     }
 
@@ -35,95 +37,84 @@ public class SettingsPanel extends JPanel {
         return weatherDropdown.getItemAt(weatherDropdown.getSelectedIndex());
     }
 
-    public double getLocationLatitude() {
-        return locationDropdown.getItemAt(locationDropdown.getSelectedIndex()).coord.getLat();
-    }
-
-    public double getLocationLongitude() {
-        return locationDropdown.getItemAt(locationDropdown.getSelectedIndex()).coord.getLon();
-    }
-
     public String getLocationName() {
-        return locationDropdown.getItemAt(locationDropdown.getSelectedIndex()).name;
+        return locationDropdown.getItemAt(locationDropdown.getSelectedIndex());
     }
-
-    private static class Location {
-        public WeatherData.coord coord;
-        public String name;
-
-        public Location(String name, double lat, double lon) {
-            this.coord = new WeatherData.coord();
-            this.coord.setLat(lat);
-            this.coord.setLon(lon);
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return this.name;
-        }
-    }
-
+    
     private void addLabel(String text) {
+    	//adds a label of text
         JLabel l = new JLabel(text);
         l.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(l);
     }
 
-    private void addButton(String text) {
-        JButton l = new JButton(text);
-        l.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.add(l);
-    }
-
     private void addCenteredComponent(JComponent c) {
+    	//sets alignment
         c.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(c);
     }
-
-    public SettingsPanel() {
-        super();
-
-        locations = new Location[3];
-        locations[0] = new Location("Cambridge", 52.2053, 0.1218);
-        locations[1] = new Location("Manchester", 53.4808, 2.2426);
-        locations[2] = new Location("Liverpool", 53.4084, 2.9916);
-
-        this.setLayout(new GridLayout(8, 1));
-
-        addLabel("Preferred Time");
-        timeSelector = new TimePicker();
-        addCenteredComponent(timeSelector);
-
-        addLabel("Duration of Cycle");
-        durationDropdown = new JComboBox<>(times);
-        addCenteredComponent(durationDropdown);
-
-        addLabel("Preferred Weather");
-        weatherDropdown = new JComboBox<>(WeatherEnum.values());
-        addCenteredComponent(weatherDropdown);
-
-        addLabel("Your Location");
-        locationDropdown = new JComboBox<>(locations);
-        addCenteredComponent(locationDropdown);
-
+    
+    private void backToHome() {
+    	
+    	//update settings
+    	Settings.setDuration(getDurationOfCycle());
+    	Settings.setLocation(getLocationName());
+    	Settings.setpreferredWeather(getPreferredWeather());
+    	Settings.setStartTime(getPreferredTime());
+    	
+    	//switch panels
+    	returnPanel.panelMain.setVisible(true);
+    	returnPanel.setContentPane(returnPanel.panelMain);
+    	this.setVisible(false);
     }
     
-    public static void main(String[] args) {
-        f = new JFrame("Settings");
-        p = new SettingsPanel();
-        f.setContentPane(p);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(600, 800);
-        p.setSize(600, 800);
-        f.setVisible(true);
+    public SettingsPanel(MainScreen returnPanel) {
+    	
+    	//gets locations
+    	try {
+			TreeSet<String> cities = CityParse.parse();	//all locations
+			this.returnPanel = returnPanel;	//panel to go back to
+	        this.setLayout(new GridLayout(9, 1));	//layout
+	        
+	        //each preference
+	        addLabel("Preferred Time");
+	        timeSelector = new TimePicker();
+	        addCenteredComponent(timeSelector);
 
-        f.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.out.println(p.getLocationName() + ": " + p.getLocationLatitude() + "N + " + p.getLocationLongitude() + "E");
-                System.out.println(p.getPreferredWeather());
-                System.out.println(p.getPreferredTime());
-            }
-        });
+	        addLabel("Duration of Cycle");
+	        durationDropdown = new JComboBox<String>(times);
+	        addCenteredComponent(durationDropdown);
+
+	        addLabel("Preferred Weather");
+	        weatherDropdown = new JComboBox<WeatherEnum>(WeatherEnum.values());
+	        addCenteredComponent(weatherDropdown);
+
+	        addLabel("Your Location");
+	        locationDropdown = new JComboBox<String>(cities.toArray(new String[0]));
+	        addCenteredComponent(locationDropdown);
+	        
+	        //back to main screen
+	        backButton = new JButton();
+	        backButton.setText("Back");
+	        addCenteredComponent(backButton);
+	        backButton.addActionListener(actionEvent -> backToHome());	//click event
+	        
+		} catch (IOException e) {
+			//if file not found
+			e.printStackTrace();
+		}
+    }
+    
+    //singleton getter
+    public static SettingsPanel getInstance(MainScreen returnPanel) {
+    	
+    	if (singletonSettingsPanel == null) {
+    		//construct as needed
+            singletonSettingsPanel = new SettingsPanel(returnPanel);
+            singletonSettingsPanel.setSize(600, 800);
+    	}
+    	
+    	singletonSettingsPanel.setVisible(true);	//make it visible
+    	return singletonSettingsPanel;
     }
 }

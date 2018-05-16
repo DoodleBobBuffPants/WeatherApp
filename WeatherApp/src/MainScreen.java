@@ -14,7 +14,7 @@ public class MainScreen extends JFrame {
     private JButton NextDay2Btn;
     private JButton NextDay3Btn;
     private JButton NextDay4Btn;
-    private JPanel panelMain;
+    public JPanel panelMain;
     
     private JButton[] nextWeekBtns = new JButton[] {NextDay1Btn, NextDay2Btn, NextDay3Btn, NextDay4Btn};	//array for buttons for days of the week
     private WeatherInformationParsed wiP;	//parsed data
@@ -24,7 +24,7 @@ public class MainScreen extends JFrame {
 
     //following three methods will take care of screen transitions
     private void launchSettingsScreen() {
-    	this.setContentPane(SettingsPanel.getInstance());
+    	this.setContentPane(SettingsPanel.getInstance(this));
     	panelMain.setVisible(false);
     }
 
