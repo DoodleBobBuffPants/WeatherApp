@@ -43,10 +43,9 @@ public class JourneyAlgorithm {
 		
 		//declares variables for use
 		LocalTime currentTime = startTime;	//current time for checking periods of the day
-		LocalTime endTime = startTime.plus(duration);	//limit of our search
 		
 		int startIndex = 0;	//start at array index 0 for list of times
-		int endIndex = (endTime.getHour() - startTime.getHour()) / 3;	//which slot in the array of 3-hourly weather data we end at
+		int endIndex = ((int) duration.toHours() + (startTime.getMinute() > 0 ? 1 : 0)) / 3;	//which slot in the array of 3-hourly weather data we end at
 
 		int dayReset = 0;	//offset to make sure we index the correct location when day rolls over
 

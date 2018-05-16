@@ -1,13 +1,10 @@
-import jdk.nashorn.internal.runtime.NumberToString;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class TodayScreen extends JFrame{
+public class TodayScreen extends JPanel {
 
 
     public TodayScreen(){
-        super("Todays Weather");
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
         add(createTop("Monday", 0f, 0f), BorderLayout.NORTH);
@@ -19,7 +16,7 @@ public class TodayScreen extends JFrame{
         JPanel bottom = new JPanel();
         bottom.setLayout(new GridLayout(1,3));
 
-        ImageIcon back = new ImageIcon("src/resources/cc3backbygoogle.png");
+        ImageIcon back = new ImageIcon("resources/cc3backbygoogle.png");
         JButton backbutton = new JButton(back);
 
 
@@ -33,7 +30,7 @@ public class TodayScreen extends JFrame{
         JPanel center = new JPanel();
         center.setLayout(new GridLayout(8, 2));
         for (Integer i = 0; i < 8; i++){
-            Label time = new Label(new Integer(200 + 300*i).toString() + "   ");
+            Label time = new Label((200 + 300*i) + "   ");
             time.setAlignment(Label.RIGHT);
             center.add(time, i);
             center.add(new Label(i.toString()), i);
@@ -57,7 +54,7 @@ public class TodayScreen extends JFrame{
 
         //Adds Image Icon
         JPanel imageIcon = new JPanel();
-        ImageIcon todayIcon = new ImageIcon("src/resources/01d.png");
+        ImageIcon todayIcon = new ImageIcon("resources/01d.png");
         imageIcon.add(new JLabel(todayIcon));
         imageIcon.setAlignmentX(Component.RIGHT_ALIGNMENT);
         center.add(imageIcon);
@@ -77,9 +74,11 @@ public class TodayScreen extends JFrame{
     }
 
     public static void main(String[] args){
-        JFrame today = new TodayScreen();
-        today.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        today.setSize(500, 1000);
-        today.setVisible(true);
+    	JFrame t = new JFrame("Today's weather");
+        JPanel today = new TodayScreen();
+        t.setContentPane(today);
+        t.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        t.setSize(600, 800);
+        t.setVisible(true);
     }
 }
