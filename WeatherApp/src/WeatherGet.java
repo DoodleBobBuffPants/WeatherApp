@@ -8,8 +8,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Calendar;
 
 public class WeatherGet {
     
@@ -42,7 +44,6 @@ public class WeatherGet {
     private static WeatherInformationParsed convertFromWeatherDataToWeatherInformationParse (WeatherData wd) {
     	
     	//clean parsed JSON into usable information
-    	
         WeatherInformationParsed toReturn = new WeatherInformationParsed();	//cleaned object
         
         //location data
@@ -52,9 +53,13 @@ public class WeatherGet {
         weatherForADay[] newArray = new weatherForADay[5];	//structure for each day obtained from the API
         
         for (int i = 0; i < newArray.length; i++) {
-        	
             newArray[i] = new weatherForADay();	//objects to store information per day
             
+            //set day of week
+            SimpleDateFormat dateFormat = new SimpleDateFormat("EEEEE");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_MONTH, i);
+            newArray[i].setDayOfWeek(dateFormat.format(cal.getTime()));
         }
         
         for (int i = 0; i < wd.getList().size(); i++) {
