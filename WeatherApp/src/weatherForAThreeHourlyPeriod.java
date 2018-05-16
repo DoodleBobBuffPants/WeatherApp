@@ -33,6 +33,7 @@ public class weatherForAThreeHourlyPeriod {
     public String getIcon() {
         return icon;
     }
+    
     public Path getIconPath() {
     	return Paths.get("resources/" + getIcon() + ".png");
     }
@@ -86,7 +87,6 @@ public class weatherForAThreeHourlyPeriod {
     }
 
     public void setDateAndTime(Date dateAndTime) {
-
         this.dateAndTime = dateAndTime;
         Instant instant = Instant.ofEpochMilli(dateAndTime.getTime());
         LocalTime res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalTime();
