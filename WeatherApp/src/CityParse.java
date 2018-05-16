@@ -18,12 +18,13 @@ public class CityParse {
 		try (BufferedReader reader = Files.newBufferedReader(cityFile)) {	//open txt file for reading
 			int i = 0;
 			String txt = reader.readLine();
-			while (txt != "" && i < 100) {
+			while (txt != "" && i < 50) {
 				String[] words = txt.split("\\s+");	//gets each field of each record
 				String[] city = Arrays.copyOfRange(words, 1, words.length - 3);	//extract just the city name
-				cities.add(String.join(" ", city));	//adds city name to set
-				txt = reader.readLine();
-				i++;
+				String lName = String.join(" ", city);
+				cities.add(lName);	//adds city name to set
+				txt = reader.readLine();	//next line
+				i++;	//limit number of values
 			}
 			
 			reader.close();	//close reader

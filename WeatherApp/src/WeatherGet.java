@@ -17,6 +17,7 @@ public class WeatherGet {
     
     public static WeatherInformationParsed run(String city) throws IOException, RequestFailed {
     	int timeoutInSeconds = 5;	//connection timeout
+        city = city.replaceAll(" ", "&");	//need "&" instead of " " to search
         
         //essentials to make http connection to API
         RequestConfig config = RequestConfig.custom().setConnectTimeout(timeoutInSeconds * 1000).setConnectionRequestTimeout(timeoutInSeconds * 1000).setSocketTimeout(timeoutInSeconds * 1000).build();
@@ -82,7 +83,12 @@ public class WeatherGet {
             thisPeriod.setIcon(thisPeriodOld.getWeather().get(0).getIcon());
             thisPeriod.setWindSpeed(thisPeriodOld.getWind().getSpeed());
             thisPeriod.setWindDirection(thisPeriodOld.getWind().getDeg());
-            thisPeriod.setRainAmount(thisPeriodOld.getRain().getAmount());
+            
+            try {
+            	thisPeriod.setRainAmount(thisPeriodOld.getRain().getAmount());
+            } catch (Exception e) {
+            	thisPeriod.setRainAmount(0);
+            }
             
             newArray[index].getList().add(thisPeriod);
             
