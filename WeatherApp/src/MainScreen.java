@@ -33,7 +33,7 @@ public class MainScreen extends JFrame {
 
     private void launchJourneyScreen() {
     	String result = JourneyAlgorithm.checkJourney(Settings.getStartTime(), Settings.getDuration(), Settings.getPreferredWeather(), wiP);
-    	checkJourneyButton.setText(result);
+    	checkJourneyButton.setText("check journey\n" + result);
     }
 
     private void launchDailyScreen(JButton btn) {
