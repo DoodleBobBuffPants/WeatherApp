@@ -37,7 +37,7 @@ public class MainScreen extends JFrame {
     }
 
     private void launchDailyScreen(weatherForADay dayWeather) {
-    	this.setContentPane(TodayScreen.getInstance(this, dayWeather));
+    	this.setContentPane(new TodayScreen(this, dayWeather));
     	panelMain.setVisible(false);
     }
 

@@ -5,20 +5,10 @@ import java.util.List;
 
 public class TodayScreen extends JPanel {
 
-	private static TodayScreen singletonTodayScreen = null;	//singleton for this panel
 	private MainScreen returnPanel;
 	private weatherForADay todayWeather;
 	
-	public static TodayScreen getInstance(MainScreen returnPanel, weatherForADay todayWeather) {
-		if(singletonTodayScreen == null) {
-			singletonTodayScreen = new TodayScreen(returnPanel, todayWeather);	//create singleton
-		}
-		
-		singletonTodayScreen.setVisible(true);	//make the panel visible
-		return singletonTodayScreen;
-	}
-	
-    private TodayScreen(MainScreen returnPanel, weatherForADay weather) {
+    public TodayScreen(MainScreen returnPanel, weatherForADay weather) {
     	
     	//initialise variables
     	this.returnPanel = returnPanel;
@@ -26,10 +16,15 @@ public class TodayScreen extends JPanel {
 		
         this.setLayout(new GridLayout(3, 1));	//set layout
         
+        this.setSize(600,  800);
+        
         //add elements
-        add(createTop(todayWeather.getDayOfWeek(), todayWeather.getList().get(0).getTemp_max(), todayWeather.getList().get(0).getTemp_min()), BorderLayout.NORTH);
-        add(createCentre(), BorderLayout.CENTER);
-        add(createBottom(), BorderLayout.SOUTH);
+        this.add(createTop(todayWeather.getDayOfWeek(), todayWeather.getList().get(0).getTemp_max(), todayWeather.getList().get(0).getTemp_min()), BorderLayout.NORTH);
+        this.add(createCentre(), BorderLayout.CENTER);
+        this.add(createBottom(), BorderLayout.SOUTH);
+        
+        this.setVisible(true);
+        
     }
     
     private void backToMain() {
@@ -37,7 +32,7 @@ public class TodayScreen extends JPanel {
     	//switch screens
     	returnPanel.panelMain.setVisible(true);
     	returnPanel.setContentPane(returnPanel.panelMain);
-    	singletonTodayScreen.setVisible(false);
+    	this.setVisible(false);
     }
 
     private JPanel createBottom() {
@@ -51,7 +46,7 @@ public class TodayScreen extends JPanel {
         
         backbutton.addActionListener(actionEvent -> backToMain());
 
-        bottom.add(backbutton, 0);
+        bottom.add(backbutton);
 
         return bottom;
     }
@@ -64,12 +59,11 @@ public class TodayScreen extends JPanel {
         center.setLayout(new GridLayout(periodData.size(), 2));	//structures the data
         
         for (int i = 0; i < periodData.size(); i++){
-        	
         	//creates data for this period
         	String data = periodData.get(i).getTime().toString() + "    " + periodData.get(i).getTemp();
             Label time = new Label(data);
-            time.setAlignment(Label.RIGHT);
-            center.add(time, i);
+            time.setAlignment(Label.CENTER);
+            center.add(time);
             
         }
         
@@ -80,7 +74,7 @@ public class TodayScreen extends JPanel {
     	
         //creates top panel
         JPanel top = new JPanel();
-        top.setLayout(new GridLayout(1, 2));
+        top.setLayout(new BorderLayout());
 
         //adds day label
         Label dayLabel = new Label(dayofweek);
@@ -105,7 +99,6 @@ public class TodayScreen extends JPanel {
         weatherData.add(new Label("Low: " + low));
         weatherData.setAlignmentX(LEFT_ALIGNMENT);
         mainData.add(weatherData);
-
 
         top.add(mainData, BorderLayout.CENTER);	//centralises the data
 
