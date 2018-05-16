@@ -80,7 +80,6 @@ public class MainScreen extends JFrame {
             
         }
     	
-    	
     }
     
     public MainScreen(String title) {
