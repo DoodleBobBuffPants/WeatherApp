@@ -19,7 +19,6 @@ public class CityParse {
 			int i = 0;
 			String txt = reader.readLine();
 			while (txt != "" && i < 100) {
-				System.out.println(txt);
 				String[] words = txt.split("\\s+");	//gets each field of each record
 				String[] city = Arrays.copyOfRange(words, 1, words.length - 3);	//extract just the city name
 				cities.add(String.join(" ", city));	//adds city name to set

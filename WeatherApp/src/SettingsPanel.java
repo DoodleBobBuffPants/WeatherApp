@@ -62,6 +62,8 @@ public class SettingsPanel extends JPanel {
     	Settings.setpreferredWeather(getPreferredWeather());
     	Settings.setStartTime(getPreferredTime());
     	
+    	returnPanel.updateData();	//update according to new settings
+    	
     	//switch panels
     	returnPanel.panelMain.setVisible(true);
     	returnPanel.setContentPane(returnPanel.panelMain);
@@ -79,18 +81,22 @@ public class SettingsPanel extends JPanel {
 	        //each preference
 	        addLabel("Preferred Time");
 	        timeSelector = new TimePicker();
+	        timeSelector.setTimeToNow();
 	        addCenteredComponent(timeSelector);
 
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
+	        durationDropdown.setSelectedIndex(0);
 	        addCenteredComponent(durationDropdown);
 
 	        addLabel("Preferred Weather");
 	        weatherDropdown = new JComboBox<WeatherEnum>(WeatherEnum.values());
+	        weatherDropdown.setSelectedIndex(0);
 	        addCenteredComponent(weatherDropdown);
 
 	        addLabel("Your Location");
 	        locationDropdown = new JComboBox<String>(cities.toArray(new String[0]));
+	        locationDropdown.setSelectedIndex(0);
 	        addCenteredComponent(locationDropdown);
 	        
 	        //back to main screen

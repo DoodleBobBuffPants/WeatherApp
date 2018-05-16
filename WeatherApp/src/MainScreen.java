@@ -58,7 +58,31 @@ public class MainScreen extends JFrame {
         	e.printStackTrace();
         }
     }
+    
+    //updates information as in constructor
+    public void updateData() {
+    	try {
+			wiP = WeatherGet.run(Settings.getLocation());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} catch (RequestFailed e) {
+			System.out.println(e.getMessage());
+		}
+    	
+    	addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(0).getIconPath().toString());
+    	for (int i = 0; i < 4; i++) {
 
+            JButton btn = nextWeekBtns[i];
+            String day = wiP.getWeatherPerDay()[i + 1].getDayOfWeek();
+            addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(0).getIconPath().toString());
+            double temperature = wiP.getWeatherPerDay()[i + 1].getList().get(0).getTemp();
+            btn.setText(day + " - " + temperature);
+            
+        }
+    	
+    	
+    }
+    
     public MainScreen(String title) {
     	super(title);	//sets window title
     	
