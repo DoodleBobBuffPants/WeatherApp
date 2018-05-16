@@ -36,9 +36,9 @@ public class MainScreen extends JFrame {
     	checkJourneyButton.setText(result + ":- press again to check again");
     }
 
-    private void launchDailyScreen(JButton btn) {
-    	//create new panel with information for that day
-    	//can use e.g. text of button to identify day
+    private void launchDailyScreen(weatherForADay dayWeather) {
+    	this.setContentPane(TodayScreen.getInstance(this, dayWeather));
+    	panelMain.setVisible(false);
     }
 
     //turns background of buttons transparent
@@ -99,8 +99,10 @@ public class MainScreen extends JFrame {
         //add click listeners
         settingButton.addActionListener(actionEvent -> launchSettingsScreen());
         checkJourneyButton.addActionListener(actionEvent -> launchJourneyScreen());
-        for (JButton btn: nextWeekBtns) {
-    		btn.addActionListener(actionEvent -> launchDailyScreen(btn));
+        for (int i = 0; i < nextWeekBtns.length; i++) {
+        	JButton btn = nextWeekBtns[i];
+        	final int j = i;
+    		btn.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[j + 1]));
     	}
         
         //add image icons to each button
