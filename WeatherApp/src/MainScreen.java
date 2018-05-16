@@ -24,8 +24,8 @@ public class MainScreen extends JFrame {
 
     //following three methods will take care of screen transitions
     private void launchSettingsScreen() {
-    	//get or create (singleton) settings screen panel and display it
-    	//setContentPane...
+    	this.setContentPane(SettingsPanel.getInstance());
+    	panelMain.setVisible(false);
     }
 
     private void launchJourneyScreen() {
