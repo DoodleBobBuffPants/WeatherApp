@@ -111,6 +111,13 @@ public class MainScreen extends JFrame {
         addIcon(settingButton, SETTINGS_ICON_PATH);
         addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(0).getIconPath().toString());
         
+        //today button information is added
+        String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
+        double todayTemp = wiP.getWeatherPerDay()[0].getList().get(0).getTemp();
+        todayButton.setText(today + " - " + todayTemp);
+        todayButton.setHorizontalTextPosition(0);
+        todayButton.setVerticalTextPosition(1);
+        
         //icons for each day of week button
         for (int i = 0; i < 4; i++) {
         	
