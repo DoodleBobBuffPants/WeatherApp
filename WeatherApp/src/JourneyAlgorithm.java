@@ -31,7 +31,7 @@ public class JourneyAlgorithm {
 			}
 			//return recommended times if they were found
 			
-			if(RValid) return "There was no journey at the specified time. An alternative is at " + RTime.toString() + (RDay == 0 ? "today" : RDay + " days from now");	//return recommended times if they were found
+			if(RValid) return "There was no journey at the specified time. An alternative is at " + RTime.getHour() + ":00 " + (RDay == 0 ? " today " : RDay + " days from now");	//return recommended times if they were found
 			if(RDay >= 5) noValidJourney = false; //updates boolean condition to false if no more times can be checked
 		}
 
