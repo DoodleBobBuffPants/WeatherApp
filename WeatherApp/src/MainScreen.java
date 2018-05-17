@@ -167,15 +167,18 @@ public class MainScreen extends JFrame {
         panelMain.setVisible(true);	//make content visible
         
     }
-
-    /**
-     * Set border colors for Next week buttons. Current chosen color is a shade of light blue.
-     */
+    
     private void setBorderColors() {
+    	todayButton.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
+        todayButton.setBorderPainted(true);
         for(JButton btn : nextWeekBtns){
             btn.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
             btn.setBorderPainted(true);
         }
+        panelMain.setOpaque(false);
+        String bgName = wiP.getWeatherPerDay()[0].getList().get(0).getWeatherForBackground();
+        JLabel bg = new JLabel(new ImageIcon("resources/" + bgName + ".png"));
+        this.setContentPane(bg);
     }
 
     public static void main(String[] args) {
@@ -183,7 +186,7 @@ public class MainScreen extends JFrame {
         MainScreen app = new MainScreen("Home");	//creates instance of application
         
         //sets parameters and displays window
-        app.setContentPane(app.panelMain);
+        app.add(app.panelMain);
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setSize(600, 800);
         app.setVisible(true);
