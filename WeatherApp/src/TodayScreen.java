@@ -58,8 +58,11 @@ public class TodayScreen extends JPanel {
         
         center.setLayout(new GridLayout(periodData.size(), 2));	//structures the data
         
-        for (int i = 0; i < periodData.size(); i++){
-        	//creates data for this period
+        //add times to panel, ignoring duplicate
+        int index = (periodData.get(0).getTime() == periodData.get(periodData.size() - 1).getTime() ? periodData.size() - 1 : periodData.size());
+        
+        for (int i = 0; i < index; i++){
+        	
         	String data = periodData.get(i).getTime().toString() + "    " + periodData.get(i).getTemp();
             Label time = new Label(data);
             time.setAlignment(Label.CENTER);
