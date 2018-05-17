@@ -11,7 +11,7 @@ public class JourneyAlgorithm {
 	public static String checkJourney(LocalTime startTime, Duration duration, WeatherEnum preferredWeather, WeatherInformationParsed weeklyWeather) {
 		
 		weatherForADay dailyArray[] = weeklyWeather.getWeatherPerDay();	//array storing weather data for each day of the week as objects within an object for the week
-		if (validJourney(startTime, duration, preferredWeather, 0, dailyArray)) return "You have a valid journey";	//notifies the user of a valid journey as per preferences
+		if (validJourney(startTime, duration, preferredWeather, 0, dailyArray)) return "You have a valid journey today at " + startTime.toString();	//notifies the user of a valid journey as per preferences
 
 		//variables for use in recommending a journey
 		boolean noValidJourney = true;	//loop condition for finding another journey time to recommend
@@ -31,7 +31,7 @@ public class JourneyAlgorithm {
 			}
 			//return recommended times if they were found
 			
-			if(RValid) return "There was no journey at the specified time. An alternative is at " + RTime.toString() + (RDay == 0 ? "today" : RDay + " days from now");	//return recommended times if they were found
+			if(RValid) return "There was no journey at the specified time. An alternative is at " + RTime.getHour() + ":00 " + (RDay == 0 ? " today " : RDay + " days from now");	//return recommended times if they were found
 			if(RDay >= 5) noValidJourney = false; //updates boolean condition to false if no more times can be checked
 		}
 
