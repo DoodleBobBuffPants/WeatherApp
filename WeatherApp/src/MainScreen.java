@@ -1,8 +1,9 @@
 //necessary imports
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,17 +28,17 @@ public class MainScreen extends JFrame {
 
     //following three methods will take care of screen transitions
     private void launchSettingsScreen() {
-    	this.setContentPane(SettingsPanel.getInstance(this));
+    	this.add(SettingsPanel.getInstance(this));
     	panelMain.setVisible(false);
     }
 
     private void launchJourneyScreen() {
     	String result = JourneyAlgorithm.checkJourney(Settings.getStartTime(), Settings.getDuration(), Settings.getPreferredWeather(), wiP);
-    	checkJourneyButton.setText(result + ":- press again to check again");
+    	checkJourneyButton.setText(result + " :- press again to check again");
     }
 
     private void launchDailyScreen(weatherForADay dayWeather) {
-    	this.setContentPane(new TodayScreen(this, dayWeather));
+    	this.add(new TodayScreen(this, dayWeather));
     	panelMain.setVisible(false);
     }
 
@@ -46,7 +47,6 @@ public class MainScreen extends JFrame {
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
-        btn.setOpaque(false);
     }
     
     private void addIcon(JButton btn, String imgPath) {
@@ -84,8 +84,9 @@ public class MainScreen extends JFrame {
     
     public MainScreen(String title) {
     	super(title);	//sets window title
-    	
     	panelMain.setLayout(new GridLayout(7, 1));
+    	
+    	panelMain.setOpaque(false);	//allows background
     	
     	//parse JSON
     	try {
@@ -111,6 +112,13 @@ public class MainScreen extends JFrame {
         addIcon(settingButton, SETTINGS_ICON_PATH);
         addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(0).getIconPath().toString());
         
+        //today button information is added
+        String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
+        double todayTemp = wiP.getWeatherPerDay()[0].getList().get(0).getTemp();
+        todayButton.setText(today + " - " + todayTemp);
+        todayButton.setHorizontalTextPosition(0);
+        todayButton.setVerticalTextPosition(1);
+        
         //icons for each day of week button
         for (int i = 0; i < 4; i++) {
         	
@@ -129,7 +137,7 @@ public class MainScreen extends JFrame {
             btn.setVerticalTextPosition(1);
         }
         
-        //make remaining icons transparent
+        //make remaining iconsTransp transparent
         makeTransparent(settingButton);
         makeTransparent(todayButton);
         
@@ -155,8 +163,24 @@ public class MainScreen extends JFrame {
             currentBtn.setBounds(i * SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 4, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
             panelMain.add(currentBtn);
         }
+
+        setBorderColors();
         
         panelMain.setVisible(true);	//make content visible
+        
+    }
+    
+    private void setBorderColors() {
+    	todayButton.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
+        todayButton.setBorderPainted(true);
+        for(JButton btn : nextWeekBtns){
+            btn.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
+            btn.setBorderPainted(true);
+        }
+
+        String bgName = wiP.getWeatherPerDay()[0].getList().get(0).getWeatherForBackground();
+        JLabel bg = new JLabel(new ImageIcon("resources/" + bgName + ".png"));
+        this.setContentPane(bg);
         
     }
 
@@ -165,7 +189,7 @@ public class MainScreen extends JFrame {
         MainScreen app = new MainScreen("Home");	//creates instance of application
         
         //sets parameters and displays window
-        app.setContentPane(app.panelMain);
+        app.add(app.panelMain);
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setSize(600, 800);
         app.setVisible(true);

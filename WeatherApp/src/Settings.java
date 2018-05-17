@@ -7,7 +7,7 @@ public class Settings {
 	//variables for each preference
 	private static LocalTime startTime = LocalTime.now();
 	private static Duration duration = Duration.ZERO;
-	private static WeatherEnum preferredWeather = WeatherEnum.SUNNY;
+	private static WeatherEnum preferredWeather = WeatherEnum.Dry;
 	private static String location = "London";
 	
 	//getters and setters for each preference
