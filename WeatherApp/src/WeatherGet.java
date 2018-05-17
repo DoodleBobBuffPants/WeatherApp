@@ -24,7 +24,7 @@ public class WeatherGet {
         CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
         
         ObjectMapper objectMapper = new ObjectMapper();	//constructs our object from JSON
-        HttpGet getCommand = new HttpGet("http://api.openweathermap.org/data/2.5/forecast?q=" + city + ",us&mode=json&appid=3f69dfc43f5609b2b1ff6217eb940866");
+        HttpGet getCommand = new HttpGet("http://api.openweathermap.org/data/2.5/forecast?q=" + city + ",uk&mode=json&appid=3f69dfc43f5609b2b1ff6217eb940866");
         WeatherData wd = (WeatherData) getContent(WeatherData.class, getCommand, httpClient, objectMapper);	//parse data
         WeatherInformationParsed wiP = convertFromWeatherDataToWeatherInformationParse(wd);	//cleans the parsed so we can use it as needed
         return wiP;
@@ -78,7 +78,35 @@ public class WeatherGet {
             thisPeriod.setTemp(Math.floor((thisPeriodOld.getMain().getTemp() - 273.05) * 100) / 100);
             thisPeriod.setTemp_max(Math.floor((thisPeriodOld.getMain().getTemp_max() - 273.05) * 100) / 100);
             thisPeriod.setTemp_min(Math.floor((thisPeriodOld.getMain().getTemp_min() - 273.05) * 100) / 100);
-            thisPeriod.setMain(thisPeriodOld.getWeather().get(0).getMain());
+            switch(thisPeriodOld.getWeather().get(0).getMain())
+            {
+                case "Thunderstorm":
+                    thisPeriod.setMain("Wet");
+                    break;
+                case "Drizzle":
+                    thisPeriod.setMain("Wet");
+                    break;
+                case "Rain":
+                    thisPeriod.setMain("Wet");
+                    break;
+                case "Snow":
+                    thisPeriod.setMain("Wet");
+                    break;
+                case "Atmosphere":
+                    thisPeriod.setMain("Foggy");
+                    break;
+                case "Clear":
+                    thisPeriod.setMain("Dry");
+                    break;
+                case "Clouds":
+                    thisPeriod.setMain("Dry");
+                    break;
+                default:
+                    thisPeriod.setMain("Dry");
+                    break;
+            }
+
+            //thisPeriod.setMain(thisPeriodOld.getWeather().get(0).getMain());
             thisPeriod.setDescription(thisPeriodOld.getWeather().get(0).getDescription());
             thisPeriod.setIcon(thisPeriodOld.getWeather().get(0).getIcon());
             thisPeriod.setWindSpeed(thisPeriodOld.getWind().getSpeed());
