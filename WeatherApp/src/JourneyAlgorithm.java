@@ -51,10 +51,8 @@ public class JourneyAlgorithm {
 
 		//iterate over the periods of the day in question
 		for (int i = startIndex; i <= endIndex; i++) {
-
-			String prefWeath = preferredWeather.toString().replaceAll("_", " ");	//conversion of enum
 			
-			if (dailyArray[day].getList().get(i - dayReset).getMain() != prefWeath) return false;	//mismatch with preferred weather => no valid journey
+			if (dailyArray[day].getList().get(i - dayReset).getMain() != preferredWeather.toString()) return false;	//mismatch with preferred weather => no valid journey
 
 			if (currentTime.getHour() < 24 & currentTime.plusHours(3).getHour() >= 0) {	//checks if we have moved to the next day
 				day++;	//increment the day index variable
