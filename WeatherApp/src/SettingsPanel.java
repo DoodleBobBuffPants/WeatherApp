@@ -1,5 +1,7 @@
 //necessary imports
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
+
 import java.awt.*;
 import java.io.IOException;
 import java.time.Duration;
@@ -103,6 +105,10 @@ public class SettingsPanel extends JPanel {
 	        //back to main screen
 	        backButton = new JButton();
 	        backButton.setText("Back");
+	        backButton.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
+	        backButton.setBorderPainted(true);
+	        backButton.setOpaque(false);
+	        backButton.setContentAreaFilled(false);
 	        addCenteredComponent(backButton);
 	        backButton.addActionListener(actionEvent -> backToHome());	//click event
 	        
