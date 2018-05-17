@@ -63,7 +63,8 @@ public class TodayScreen extends JPanel {
     }
 
     private JPanel createCentre() {
-        JPanel center = new JPanel();	//panel of data
+    	//panel for data
+        JPanel center = new JPanel();
         center.setOpaque(false);
         List<weatherForAThreeHourlyPeriod> periodData = todayWeather.getList();	//list of all information needed
         
