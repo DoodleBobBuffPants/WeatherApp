@@ -78,7 +78,38 @@ public class WeatherGet {
             thisPeriod.setTemp(Math.floor((thisPeriodOld.getMain().getTemp() - 273.05) * 100) / 100);
             thisPeriod.setTemp_max(Math.floor((thisPeriodOld.getMain().getTemp_max() - 273.05) * 100) / 100);
             thisPeriod.setTemp_min(Math.floor((thisPeriodOld.getMain().getTemp_min() - 273.05) * 100) / 100);
-            thisPeriod.setMain(thisPeriodOld.getWeather().get(0).getMain());
+            thisPeriod.setWeatherForBackground(thisPeriodOld.getWeather().get(0).getMain());
+            
+            //groups weather
+            switch(thisPeriodOld.getWeather().get(0).getMain())
+            {
+                case "Thunderstorm":
+                    thisPeriod.setMain("Wet");
+                    break;
+                case "Drizzle":
+                    thisPeriod.setMain("Wet");
+                    break;
+                case "Rain":
+                    thisPeriod.setMain("Wet");
+                    break;
+                case "Snow":
+                    thisPeriod.setMain("Wet");
+                    break;
+                case "Atmosphere":
+                    thisPeriod.setMain("Foggy");
+                    break;
+                case "Clear":
+                    thisPeriod.setMain("Dry");
+                    break;
+                case "Clouds":
+                    thisPeriod.setMain("Dry");
+                    break;
+                default:
+                    thisPeriod.setMain("Dry");
+                    break;
+            }
+
+            //thisPeriod.setMain(thisPeriodOld.getWeather().get(0).getMain());
             thisPeriod.setDescription(thisPeriodOld.getWeather().get(0).getDescription());
             thisPeriod.setIcon(thisPeriodOld.getWeather().get(0).getIcon());
             thisPeriod.setWindSpeed(thisPeriodOld.getWind().getSpeed());
