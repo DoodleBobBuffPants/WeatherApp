@@ -4,10 +4,6 @@ import java.time.Duration;
 
 public class JourneyAlgorithm {
 
-	public static void main(String[] args) {
-		//check for a valid journey by inspecting the weather in all periods of time for the preferred duration, and recommending alternatives if the preferred is unachievable
-	}
-
 	public static String checkJourney(LocalTime startTime, Duration duration, WeatherEnum preferredWeather, WeatherInformationParsed weeklyWeather) {
 		
 		weatherForADay dailyArray[] = weeklyWeather.getWeatherPerDay();	//array storing weather data for each day of the week as objects within an object for the week
