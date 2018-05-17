@@ -78,12 +78,9 @@ public class WeatherGet {
             thisPeriod.setTemp(Math.floor((thisPeriodOld.getMain().getTemp() - 273.05) * 100) / 100);
             thisPeriod.setTemp_max(Math.floor((thisPeriodOld.getMain().getTemp_max() - 273.05) * 100) / 100);
             thisPeriod.setTemp_min(Math.floor((thisPeriodOld.getMain().getTemp_min() - 273.05) * 100) / 100);
-<<<<<<< HEAD
             thisPeriod.setWeatherForBackground(thisPeriodOld.getWeather().get(0).getMain());
-=======
             
             //groups weather
->>>>>>> 23ce28cabc21726ba186b3ffd4bd0e3db20608a1
             switch(thisPeriodOld.getWeather().get(0).getMain())
             {
                 case "Thunderstorm":

@@ -1,8 +1,9 @@
 //necessary imports
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -84,9 +85,8 @@ public class MainScreen extends JFrame {
     
     public MainScreen(String title) {
     	super(title);	//sets window title
-    	
     	panelMain.setLayout(new GridLayout(7, 1));
-    	
+
     	//parse JSON
     	try {
 			wiP = WeatherGet.run("London");
@@ -136,7 +136,7 @@ public class MainScreen extends JFrame {
             btn.setVerticalTextPosition(1);
         }
         
-        //make remaining icons transparent
+        //make remaining iconsTransp transparent
         makeTransparent(settingButton);
         makeTransparent(todayButton);
         
@@ -162,9 +162,18 @@ public class MainScreen extends JFrame {
             currentBtn.setBounds(i * SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 4, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
             panelMain.add(currentBtn);
         }
+
+        setColors();
         
         panelMain.setVisible(true);	//make content visible
         
+    }
+
+    private void setColors() {
+        for(JButton btn : nextWeekBtns){
+            btn.setBorder(new MatteBorder(0, 0, 2, 0, new Color(198, 240, 254)));
+            btn.setBorderPainted(true);
+        }
     }
 
     public static void main(String[] args) {
