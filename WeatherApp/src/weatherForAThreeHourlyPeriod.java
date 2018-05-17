@@ -15,12 +15,21 @@ public class weatherForAThreeHourlyPeriod {
     private double temp_min = 0;
     private double temp_max = 0;
     private String main = "";
+    private String weatherForBackground = "";
     private String description = "";
     private String icon = "";
     private double windSpeed = 0;
     private double windDirection = 0;
     private double rainAmount = 0;
-    
+
+    public String getWeatherForBackground() {
+        return weatherForBackground;
+    }
+
+    public void setWeatherForBackground(String weatherForBackground) {
+        this.weatherForBackground = weatherForBackground;
+    }
+
     //setters and getters for data
     public LocalTime getTime() {
         return time;
