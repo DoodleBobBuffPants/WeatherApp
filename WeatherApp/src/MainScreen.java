@@ -46,7 +46,6 @@ public class MainScreen extends JFrame {
     private void makeTransparent(JButton btn) {
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
-        btn.setBorderPainted(false);
     }
     
     private void addIcon(JButton btn, String imgPath) {
@@ -172,6 +171,10 @@ public class MainScreen extends JFrame {
     
     private void setBorderColors() {
     	//styles buttons
+    	settingButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
+        settingButton.setBorderPainted(true);
+        checkJourneyButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
+        checkJourneyButton.setBorderPainted(true);
     	todayButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
         todayButton.setBorderPainted(true);
         for(JButton btn : nextWeekBtns){
@@ -193,7 +196,7 @@ public class MainScreen extends JFrame {
         //sets parameters and displays window
         app.add(app.panelMain);
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        app.setSize(600, 800);
+        app.pack();
         app.setVisible(true);
     }
 }
