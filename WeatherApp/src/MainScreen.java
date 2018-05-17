@@ -47,7 +47,6 @@ public class MainScreen extends JFrame {
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
         btn.setBorderPainted(false);
-        btn.setOpaque(false);
     }
     
     private void addIcon(JButton btn, String imgPath) {
@@ -163,15 +162,18 @@ public class MainScreen extends JFrame {
             panelMain.add(currentBtn);
         }
 
-        setColors();
+        setBorderColors();
         
         panelMain.setVisible(true);	//make content visible
         
     }
 
-    private void setColors() {
+    /**
+     * Set border colors for Next week buttons. Current chosen color is a shade of light blue.
+     */
+    private void setBorderColors() {
         for(JButton btn : nextWeekBtns){
-            btn.setBorder(new MatteBorder(0, 0, 2, 0, new Color(198, 240, 254)));
+            btn.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
             btn.setBorderPainted(true);
         }
     }
