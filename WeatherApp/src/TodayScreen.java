@@ -1,9 +1,7 @@
 //necessary imports
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.TreeSet;
 
 public class TodayScreen extends JPanel {
 
@@ -60,8 +58,10 @@ public class TodayScreen extends JPanel {
         
         center.setLayout(new GridLayout(periodData.size(), 2));	//structures the data
         
-        //add times to panel
-        for (int i = 0; i < periodData.size(); i++){
+        //add times to panel, ignoring duplicate
+        int index = (periodData.get(0).getTime() == periodData.get(periodData.size() - 1).getTime() ? periodData.size() - 1 : periodData.size());
+        
+        for (int i = 0; i < index; i++){
         	
         	String data = periodData.get(i).getTime().toString() + "    " + periodData.get(i).getTemp();
             Label time = new Label(data);
