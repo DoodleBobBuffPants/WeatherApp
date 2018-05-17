@@ -85,21 +85,25 @@ public class SettingsPanel extends JPanel {
 	        addLabel("Preferred Time");
 	        timeSelector = new TimePicker();
 	        timeSelector.setTimeToNow();
+	        timeSelector.setOpaque(false);
 	        addCenteredComponent(timeSelector);
 
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
 	        durationDropdown.setSelectedIndex(0);
+	        durationDropdown.setOpaque(false);
 	        addCenteredComponent(durationDropdown);
 
 	        addLabel("Preferred Weather");
 	        weatherDropdown = new JComboBox<WeatherEnum>(WeatherEnum.values());
 	        weatherDropdown.setSelectedIndex(0);
+	        weatherDropdown.setOpaque(false);
 	        addCenteredComponent(weatherDropdown);
 
 	        addLabel("Your Location");
 	        locationDropdown = new JComboBox<String>(cities.toArray(new String[0]));
 	        locationDropdown.setSelectedIndex(0);
+	        locationDropdown.setOpaque(false);
 	        addCenteredComponent(locationDropdown);
 	        
 	        //back to main screen
