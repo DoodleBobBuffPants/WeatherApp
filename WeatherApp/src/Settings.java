@@ -5,10 +5,10 @@ import java.time.Duration;
 public class Settings {
 	
 	//variables for each preference
-	private static LocalTime startTime;
-	private static Duration duration;
-	private static WeatherEnum preferredWeather;
-	private static String location;
+	private static LocalTime startTime = LocalTime.now();
+	private static Duration duration = Duration.ZERO;
+	private static WeatherEnum preferredWeather = WeatherEnum.SUNNY;
+	private static String location = "London";
 	
 	//getters and setters for each preference
 	public static void setStartTime(LocalTime newStart) {

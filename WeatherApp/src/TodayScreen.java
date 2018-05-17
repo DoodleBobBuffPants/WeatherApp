@@ -1,67 +1,99 @@
-
+//necessary imports
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class TodayScreen extends JPanel {
 
-
-    public TodayScreen(){
-
-        BorderLayout borderLayout = new BorderLayout();
-        this.setLayout(borderLayout);
-        add(createTop("Monday", 0f, 0f), BorderLayout.NORTH);
-        add(createCentre(), BorderLayout.CENTER);
-        add(createBottom(), BorderLayout.SOUTH);
+	private MainScreen returnPanel;
+	private weatherForADay todayWeather;
+	
+    public TodayScreen(MainScreen returnPanel, weatherForADay weather) {
+    	
+    	//initialise variables
+    	this.returnPanel = returnPanel;
+		this.todayWeather = weather;
+		
+        this.setLayout(new GridLayout(3, 1));	//set layout
+        
+        this.setSize(600,  800);
+        
+        //add elements
+        this.add(createTop(todayWeather.getDayOfWeek(), todayWeather.getList().get(0).getTemp_max(), todayWeather.getList().get(0).getTemp_min()), BorderLayout.NORTH);
+        this.add(createCentre(), BorderLayout.CENTER);
+        this.add(createBottom(), BorderLayout.SOUTH);
+        
+        this.setVisible(true);
+        
+    }
+    
+    private void backToMain() {
+    	
+    	//switch screens
+    	returnPanel.panelMain.setVisible(true);
+    	returnPanel.setContentPane(returnPanel.panelMain);
+    	this.setVisible(false);
     }
 
     private JPanel createBottom() {
+    	
+    	//bottom to return to main screen
         JPanel bottom = new JPanel();
-        bottom.setLayout(new GridLayout(1,3));
-
+        bottom.setLayout(new GridLayout(1, 1));
 
         ImageIcon back = new ImageIcon("resources/cc3backbygoogle.png");
         JButton backbutton = new JButton(back);
+        
+        backbutton.addActionListener(actionEvent -> backToMain());
 
-
-        bottom.add(backbutton, 0);
-        bottom.add(new Label("Button licensed under CC3 from google"));
+        bottom.add(backbutton);
 
         return bottom;
     }
 
     private JPanel createCentre() {
-        JPanel center = new JPanel();
-        center.setLayout(new GridLayout(8, 2));
-        for (Integer i = 0; i < 8; i++){
-            Label time = new Label((200 + 300*i) + "   ");
-            time.setAlignment(Label.RIGHT);
-            center.add(time, i);
-            center.add(new Label(i.toString()), i);
+        JPanel center = new JPanel();	//panel of data
+        
+        List<weatherForAThreeHourlyPeriod> periodData = todayWeather.getList();	//list of all information needed
+        
+        center.setLayout(new GridLayout(periodData.size(), 2));	//structures the data
+        
+        //add times to panel, ignoring duplicate
+        int index = (periodData.get(0).getTime() == periodData.get(periodData.size() - 1).getTime() ? periodData.size() - 1 : periodData.size());
+        
+        for (int i = 0; i < index; i++){
+        	
+        	String data = periodData.get(i).getTime().toString() + "    " + periodData.get(i).getTemp();
+            Label time = new Label(data);
+            time.setAlignment(Label.CENTER);
+            center.add(time);
+            
         }
+        
         return center;
     }
 
-    private JPanel createTop(String dayofweek, float high, float low){
-        //Creates JPanel to return
+    private JPanel createTop(String dayofweek, double high, double low) {
+    	
+        //creates top panel
         JPanel top = new JPanel();
         top.setLayout(new BorderLayout());
 
-        //Adds Day Label
+        //adds day label
         Label dayLabel = new Label(dayofweek);
         dayLabel.setAlignment(Label.CENTER);
         top.add(dayLabel, BorderLayout.NORTH);
 
-
-        JPanel center = new JPanel();
-        center.setLayout(new GridLayout(1,2));
+        //for the general weather data
+        JPanel mainData = new JPanel();
+        mainData.setLayout(new GridLayout(1,2));
 
         //Adds Image Icon
         JPanel imageIcon = new JPanel();
-
-        ImageIcon todayIcon = new ImageIcon("resources/01d.png");
+        ImageIcon todayIcon = new ImageIcon(todayWeather.getList().get(0).getIconPath().toString());
         imageIcon.add(new JLabel(todayIcon));
         imageIcon.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        center.add(imageIcon);
+        mainData.add(imageIcon);
 
         //Adds Weather data
         JPanel weatherData = new JPanel();
@@ -69,20 +101,10 @@ public class TodayScreen extends JPanel {
         weatherData.add(new Label("High: " + high));
         weatherData.add(new Label("Low: " + low));
         weatherData.setAlignmentX(LEFT_ALIGNMENT);
-        center.add(weatherData);
+        mainData.add(weatherData);
 
-
-        top.add(center, BorderLayout.CENTER);
+        top.add(mainData, BorderLayout.CENTER);	//centralises the data
 
         return top;
-    }
-
-    public static void main(String[] args){
-    	JFrame t = new JFrame("Today's weather");
-        JPanel today = new TodayScreen();
-        t.setContentPane(today);
-        t.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        t.setSize(600, 800);
-        t.setVisible(true);
     }
 }
