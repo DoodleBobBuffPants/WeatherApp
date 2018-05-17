@@ -99,6 +99,8 @@ public class MainScreen extends JFrame {
         //add click listeners
         settingButton.addActionListener(actionEvent -> launchSettingsScreen());
         checkJourneyButton.addActionListener(actionEvent -> launchJourneyScreen());
+        todayButton.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[0]));
+        
         for (int i = 0; i < nextWeekBtns.length; i++) {
         	JButton btn = nextWeekBtns[i];
         	final int j = i;
