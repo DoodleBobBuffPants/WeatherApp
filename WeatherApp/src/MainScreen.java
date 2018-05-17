@@ -171,13 +171,15 @@ public class MainScreen extends JFrame {
     }
     
     private void setBorderColors() {
+    	//styles buttons
     	todayButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
         todayButton.setBorderPainted(true);
         for(JButton btn : nextWeekBtns){
             btn.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
             btn.setBorderPainted(true);
         }
-
+        
+        //adds adaptive background
         String bgName = wiP.getWeatherPerDay()[0].getList().get(0).getWeatherForBackground();
         JLabel bg = new JLabel(new ImageIcon("resources/" + bgName + ".png"));
         this.setContentPane(bg);
