@@ -52,7 +52,7 @@ public class MainScreen extends JFrame {
     	//add an image corresponding to weather
         try {
             BufferedImage img = ImageIO.read(new File(imgPath));
-            btn.setIcon(new ImageIcon(img));
+            btn.setIcon(new ImageIcon(img.getScaledInstance((int) (img.getWidth() * 1.5), (int) (img.getHeight() * 1.5), 0)));
         } catch (IOException e) {
         	e.printStackTrace();
         }
@@ -99,6 +99,7 @@ public class MainScreen extends JFrame {
         //add click listeners
         settingButton.addActionListener(actionEvent -> launchSettingsScreen());
         checkJourneyButton.addActionListener(actionEvent -> launchJourneyScreen());
+        checkJourneyButton.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
         todayButton.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[0]));
         
         for (int i = 0; i < nextWeekBtns.length; i++) {
@@ -114,7 +115,8 @@ public class MainScreen extends JFrame {
         //today button information is added
         String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
         double todayTemp = wiP.getWeatherPerDay()[0].getList().get(0).getTemp();
-        todayButton.setText(today + " - " + todayTemp);
+        todayButton.setText(today + " - " + todayTemp + " °C");
+        todayButton.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
         todayButton.setHorizontalTextPosition(0);
         todayButton.setVerticalTextPosition(1);
         
@@ -128,9 +130,12 @@ public class MainScreen extends JFrame {
             addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(0).getIconPath().toString());	//icon for this button
             
             double temperature = wiP.getWeatherPerDay()[i + 1].getList().get(0).getTemp();	//temperature
-            btn.setText(day + " - " + temperature);	//button text
+            btn.setText(day + " - " + temperature + " °C");	//button text
             makeTransparent(btn);	//visual property
             
+            //sets font
+            btn.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
+
             //text goes above image
             btn.setHorizontalTextPosition(0);
             btn.setVerticalTextPosition(1);
@@ -151,7 +156,7 @@ public class MainScreen extends JFrame {
 
         int checkButtonWidth = SCREEN_WIDTH / 2;
         checkJourneyButton.setBounds(WIDTH_CENTER - checkButtonWidth / 2, SCREEN_HEIGHT / 8, checkButtonWidth, SCREEN_HEIGHT / 4);
-        checkJourneyButton.setText("check journey");
+        checkJourneyButton.setText("Check journey");
         panelMain.add(checkJourneyButton);
 
         todayButton.setBounds(WIDTH_CENTER - SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 8, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4);
@@ -172,14 +177,13 @@ public class MainScreen extends JFrame {
     private void setBorderColors() {
     	//styles buttons
     	settingButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
-        settingButton.setBorderPainted(true);
         checkJourneyButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
-        checkJourneyButton.setBorderPainted(true);
+        checkJourneyButton.setOpaque(false);
+        checkJourneyButton.setContentAreaFilled(false);
     	todayButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
-        todayButton.setBorderPainted(true);
-        for(JButton btn : nextWeekBtns){
+        for(int i = 0; i < nextWeekBtns.length; i++) {
+        	JButton btn = nextWeekBtns[i];
             btn.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
-            btn.setBorderPainted(true);
         }
         
         //adds adaptive background
