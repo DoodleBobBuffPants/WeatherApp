@@ -1,6 +1,6 @@
 //enumeration types for weather
 public enum WeatherEnum {
-	WET,
-	FOGGY,
-	DRY;
+	Wet,
+	Foggy,
+	Dry;
 }
