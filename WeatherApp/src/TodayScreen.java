@@ -75,8 +75,9 @@ public class TodayScreen extends JPanel {
         for (int i = 0; i < index; i++){
         	
         	String data = periodData.get(i).getTime().toString() + "    " + periodData.get(i).getTemp();
-            Label time = new Label(data);
-            time.setAlignment(Label.CENTER);
+            JLabel time = new JLabel(data);
+            time.setHorizontalAlignment(JLabel.CENTER);
+            time.setVerticalAlignment(JLabel.CENTER);
             center.add(time);
             
         }
@@ -92,8 +93,9 @@ public class TodayScreen extends JPanel {
         top.setLayout(new BorderLayout());
 
         //adds day label
-        Label dayLabel = new Label(dayofweek);
-        dayLabel.setAlignment(Label.CENTER);
+        JLabel dayLabel = new JLabel(dayofweek);
+        dayLabel.setHorizontalAlignment(JLabel.CENTER);
+        dayLabel.setVerticalAlignment(JLabel.CENTER);
         top.add(dayLabel, BorderLayout.NORTH);
 
         //for the general weather data
@@ -113,8 +115,8 @@ public class TodayScreen extends JPanel {
         JPanel weatherData = new JPanel();
         weatherData.setOpaque(false);
         weatherData.setLayout(new BoxLayout(weatherData, 1));
-        weatherData.add(new Label("High: " + high));
-        weatherData.add(new Label("Low: " + low));
+        weatherData.add(new JLabel("High: " + high));
+        weatherData.add(new JLabel("Low: " + low));
         weatherData.setAlignmentX(LEFT_ALIGNMENT);
         mainData.add(weatherData);
 
