@@ -164,17 +164,17 @@ public class MainScreen extends JFrame {
             panelMain.add(currentBtn);
         }
 
-        setBorderColors();
+        setBorderColors();	//add style
         
         panelMain.setVisible(true);	//make content visible
         
     }
     
     private void setBorderColors() {
-    	todayButton.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
+    	todayButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
         todayButton.setBorderPainted(true);
         for(JButton btn : nextWeekBtns){
-            btn.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
+            btn.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
             btn.setBorderPainted(true);
         }
 
@@ -186,7 +186,7 @@ public class MainScreen extends JFrame {
 
     public static void main(String[] args) {
     	
-        MainScreen app = new MainScreen("Home");	//creates instance of application
+        MainScreen app = new MainScreen("CYCLONE");	//creates instance of application
         
         //sets parameters and displays window
         app.add(app.panelMain);

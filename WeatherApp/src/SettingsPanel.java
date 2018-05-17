@@ -85,31 +85,31 @@ public class SettingsPanel extends JPanel {
 	        addLabel("Preferred Time");
 	        timeSelector = new TimePicker();
 	        timeSelector.setTimeToNow();
-	        timeSelector.setOpaque(false);
+	        timeSelector.setBackground(new Color(0, 0, 100, 100));
 	        addCenteredComponent(timeSelector);
 
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
 	        durationDropdown.setSelectedIndex(0);
-	        durationDropdown.setOpaque(false);
+	        durationDropdown.setBackground(new Color(0, 0, 100, 100));
 	        addCenteredComponent(durationDropdown);
 
 	        addLabel("Preferred Weather");
 	        weatherDropdown = new JComboBox<WeatherEnum>(WeatherEnum.values());
 	        weatherDropdown.setSelectedIndex(0);
-	        weatherDropdown.setOpaque(false);
+	        weatherDropdown.setBackground(new Color(0, 0, 100, 100));
 	        addCenteredComponent(weatherDropdown);
 
 	        addLabel("Your Location");
 	        locationDropdown = new JComboBox<String>(cities.toArray(new String[0]));
 	        locationDropdown.setSelectedIndex(0);
-	        locationDropdown.setOpaque(false);
+	        locationDropdown.setBackground(new Color(0, 0, 100, 100));
 	        addCenteredComponent(locationDropdown);
 	        
 	        //back to main screen
 	        backButton = new JButton();
 	        backButton.setText("Back");
-	        backButton.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
+	        backButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
 	        backButton.setBorderPainted(true);
 	        backButton.setOpaque(false);
 	        backButton.setContentAreaFilled(false);
