@@ -28,7 +28,7 @@ public class MainScreen extends JFrame {
 
     //following three methods will take care of screen transitions
     private void launchSettingsScreen() {
-    	this.setContentPane(SettingsPanel.getInstance(this));
+    	this.add(SettingsPanel.getInstance(this));
     	panelMain.setVisible(false);
     }
 
@@ -38,7 +38,7 @@ public class MainScreen extends JFrame {
     }
 
     private void launchDailyScreen(weatherForADay dayWeather) {
-    	this.setContentPane(new TodayScreen(this, dayWeather));
+    	this.add(new TodayScreen(this, dayWeather));
     	panelMain.setVisible(false);
     }
 
@@ -85,7 +85,9 @@ public class MainScreen extends JFrame {
     public MainScreen(String title) {
     	super(title);	//sets window title
     	panelMain.setLayout(new GridLayout(7, 1));
-
+    	
+    	panelMain.setOpaque(false);	//allows background
+    	
     	//parse JSON
     	try {
 			wiP = WeatherGet.run("London");
@@ -175,10 +177,11 @@ public class MainScreen extends JFrame {
             btn.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
             btn.setBorderPainted(true);
         }
-        panelMain.setOpaque(false);
+
         String bgName = wiP.getWeatherPerDay()[0].getList().get(0).getWeatherForBackground();
         JLabel bg = new JLabel(new ImageIcon("resources/" + bgName + ".png"));
         this.setContentPane(bg);
+        
     }
 
     public static void main(String[] args) {

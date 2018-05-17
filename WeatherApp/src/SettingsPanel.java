@@ -66,7 +66,8 @@ public class SettingsPanel extends JPanel {
     	
     	//switch panels
     	returnPanel.panelMain.setVisible(true);
-    	returnPanel.setContentPane(returnPanel.panelMain);
+    	returnPanel.remove(this);
+    	returnPanel.add(returnPanel.panelMain);
     	this.setVisible(false);
     }
     
@@ -118,6 +119,7 @@ public class SettingsPanel extends JPanel {
     		//construct as needed
             singletonSettingsPanel = new SettingsPanel(returnPanel);
             singletonSettingsPanel.setSize(600, 800);
+            singletonSettingsPanel.setOpaque(false);
     	}
     	
     	singletonSettingsPanel.setVisible(true);	//make it visible

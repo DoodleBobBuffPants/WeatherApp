@@ -1,5 +1,7 @@
 //necessary imports
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
+
 import java.awt.*;
 import java.util.List;
 
@@ -13,15 +15,17 @@ public class TodayScreen extends JPanel {
     	//initialise variables
     	this.returnPanel = returnPanel;
 		this.todayWeather = weather;
+		 
+		this.setOpaque(false);	//allows background
 		
         this.setLayout(new GridLayout(3, 1));	//set layout
         
         this.setSize(600,  800);
         
         //add elements
-        this.add(createTop(todayWeather.getDayOfWeek(), todayWeather.getList().get(0).getTemp_max(), todayWeather.getList().get(0).getTemp_min()), BorderLayout.NORTH);
-        this.add(createCentre(), BorderLayout.CENTER);
-        this.add(createBottom(), BorderLayout.SOUTH);
+        this.add(createTop(todayWeather.getDayOfWeek(), todayWeather.getList().get(0).getTemp_max(), todayWeather.getList().get(0).getTemp_min()));
+        this.add(createCentre());
+        this.add(createBottom());
         
         this.setVisible(true);
         
@@ -31,7 +35,8 @@ public class TodayScreen extends JPanel {
     	
     	//switch screens
     	returnPanel.panelMain.setVisible(true);
-    	returnPanel.setContentPane(returnPanel.panelMain);
+    	returnPanel.remove(this);
+    	returnPanel.add(returnPanel.panelMain);
     	this.setVisible(false);
     }
 
@@ -39,10 +44,16 @@ public class TodayScreen extends JPanel {
     	
     	//bottom to return to main screen
         JPanel bottom = new JPanel();
+        bottom.setOpaque(false);
         bottom.setLayout(new GridLayout(1, 1));
 
         ImageIcon back = new ImageIcon("resources/cc3backbygoogle.png");
         JButton backbutton = new JButton(back);
+        
+        backbutton.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
+        backbutton.setBorderPainted(true);
+        backbutton.setOpaque(false);
+        backbutton.setContentAreaFilled(false);
         
         backbutton.addActionListener(actionEvent -> backToMain());
 
@@ -53,7 +64,7 @@ public class TodayScreen extends JPanel {
 
     private JPanel createCentre() {
         JPanel center = new JPanel();	//panel of data
-        
+        center.setOpaque(false);
         List<weatherForAThreeHourlyPeriod> periodData = todayWeather.getList();	//list of all information needed
         
         center.setLayout(new GridLayout(periodData.size(), 2));	//structures the data
@@ -77,6 +88,7 @@ public class TodayScreen extends JPanel {
     	
         //creates top panel
         JPanel top = new JPanel();
+        top.setOpaque(false);
         top.setLayout(new BorderLayout());
 
         //adds day label
@@ -86,10 +98,12 @@ public class TodayScreen extends JPanel {
 
         //for the general weather data
         JPanel mainData = new JPanel();
+        mainData.setOpaque(false);
         mainData.setLayout(new GridLayout(1,2));
 
         //Adds Image Icon
         JPanel imageIcon = new JPanel();
+        imageIcon.setOpaque(false);
         ImageIcon todayIcon = new ImageIcon(todayWeather.getList().get(0).getIconPath().toString());
         imageIcon.add(new JLabel(todayIcon));
         imageIcon.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -97,6 +111,7 @@ public class TodayScreen extends JPanel {
 
         //Adds Weather data
         JPanel weatherData = new JPanel();
+        weatherData.setOpaque(false);
         weatherData.setLayout(new BoxLayout(weatherData, 1));
         weatherData.add(new Label("High: " + high));
         weatherData.add(new Label("Low: " + low));
