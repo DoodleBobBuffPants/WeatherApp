@@ -36,7 +36,17 @@ public class MainScreen extends JFrame {
 
     private void launchJourneyScreen() {
     	String result = JourneyAlgorithm.checkJourney(Settings.getStartTime(), Settings.getDuration(), Settings.getPreferredWeather(), wiP);
-    	checkJourneyButton.setText(result + " :- press again to check again");
+    	JLabel tText = new JLabel(result);
+    	JLabel bText = new JLabel("press again to check again");
+    	tText.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+    	bText.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+    	tText.setHorizontalAlignment(JLabel.CENTER);
+    	tText.setVerticalAlignment(JLabel.CENTER);
+    	bText.setHorizontalAlignment(JLabel.CENTER);
+    	bText.setVerticalAlignment(JLabel.CENTER);
+    	checkJourneyButton.setText("");
+    	checkJourneyButton.add(tText, BorderLayout.NORTH);
+    	checkJourneyButton.add(bText, BorderLayout.SOUTH);
     }
 
     private void launchDailyScreen(weatherForADay dayWeather) {
@@ -160,6 +170,7 @@ public class MainScreen extends JFrame {
 
         int checkButtonWidth = SCREEN_WIDTH / 2;
         checkJourneyButton.setBounds(WIDTH_CENTER - checkButtonWidth / 2, SCREEN_HEIGHT / 8, checkButtonWidth, SCREEN_HEIGHT / 4);
+        checkJourneyButton.setLayout(new BorderLayout());
         checkJourneyButton.setText("Check journey");
         panelMain.add(checkJourneyButton);
 

@@ -117,8 +117,8 @@ public class TodayScreen extends JPanel {
         Image tiTemp = todayIcon.getImage();
         tiTemp = tiTemp.getScaledInstance(todayIcon.getIconWidth() * 3, todayIcon.getIconHeight() * 3, Image.SCALE_SMOOTH);
         imageIcon.add(new JLabel(new ImageIcon(tiTemp)), BorderLayout.NORTH);
-        imageIcon.setAlignmentX(CENTER_ALIGNMENT);
-        imageIcon.setAlignmentY(TOP_ALIGNMENT);
+        imageIcon.setAlignmentX(JPanel.CENTER_ALIGNMENT);
+        imageIcon.setAlignmentY(JPanel.TOP_ALIGNMENT);
         mainData.add(imageIcon);
 
         //Adds Weather data
@@ -127,10 +127,17 @@ public class TodayScreen extends JPanel {
         weatherData.setLayout(new BoxLayout(weatherData, 1));
         JLabel hLabel = new JLabel("High: " + high + " °C");
         JLabel lLabel = new JLabel("Low: " + low + " °C");
+        
+        //adds windspeed
+        double wind = todayWeather.getList().get(0).getWindSpeed();
+        JLabel wLabel = new JLabel("Wind Speed: " + wind + " MPH");
+        
         hLabel.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
         lLabel.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+        wLabel.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
         weatherData.add(hLabel);
         weatherData.add(lLabel);
+        weatherData.add(wLabel);
         weatherData.setAlignmentX(LEFT_ALIGNMENT);
         mainData.add(weatherData);
 
