@@ -1,6 +1,11 @@
 //necessary imports
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalTime;
@@ -44,7 +49,9 @@ public class SettingsPanel extends JPanel {
     private void addLabel(String text) {
     	//adds a label of text
         JLabel l = new JLabel(text);
-        l.setAlignmentX(Component.CENTER_ALIGNMENT);
+        l.setHorizontalAlignment(JLabel.CENTER);
+        l.setVerticalAlignment(JLabel.CENTER);
+        l.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
         this.add(l);
     }
 
@@ -66,7 +73,8 @@ public class SettingsPanel extends JPanel {
     	
     	//switch panels
     	returnPanel.panelMain.setVisible(true);
-    	returnPanel.setContentPane(returnPanel.panelMain);
+    	returnPanel.remove(this);
+    	returnPanel.add(returnPanel.panelMain);
     	this.setVisible(false);
     }
     
@@ -87,23 +95,38 @@ public class SettingsPanel extends JPanel {
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
 	        durationDropdown.setSelectedIndex(0);
+	        durationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+	        ((JLabel) durationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+	        durationDropdown.setBackground(new Color(198, 240, 254, 100));
 	        addCenteredComponent(durationDropdown);
 
 	        addLabel("Preferred Weather");
 	        weatherDropdown = new JComboBox<WeatherEnum>(WeatherEnum.values());
 	        weatherDropdown.setSelectedIndex(0);
+	        weatherDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+	        ((JLabel) weatherDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+	        weatherDropdown.setBackground(new Color(198, 240, 254, 100));
 	        addCenteredComponent(weatherDropdown);
 
 	        addLabel("Your Location");
 	        locationDropdown = new JComboBox<String>(cities.toArray(new String[0]));
 	        locationDropdown.setSelectedIndex(0);
+	        locationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+	        ((JLabel) locationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+	        locationDropdown.setBackground(new Color(198, 240, 254, 100));
 	        addCenteredComponent(locationDropdown);
 	        
 	        //back to main screen
 	        backButton = new JButton();
-	        backButton.setText("Back");
-	        addCenteredComponent(backButton);
-	        backButton.addActionListener(actionEvent -> backToHome());	//click event
+	        BufferedImage img = ImageIO.read(new File("resources/cc3backbygoogle.png"));
+	        backButton.setIcon(new ImageIcon(img.getScaledInstance((int) (img.getWidth() * 1.5), (int) (img.getHeight() * 1.5), 0)));
+	        backButton.setHorizontalAlignment(JButton.LEFT);
+	        backButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
+		    backButton.setBorderPainted(true);
+		    backButton.setOpaque(false);
+		    backButton.setContentAreaFilled(false);
+		    addCenteredComponent(backButton);
+		    backButton.addActionListener(actionEvent -> backToHome());	//click event
 	        
 		} catch (IOException e) {
 			//if file not found
@@ -118,6 +141,7 @@ public class SettingsPanel extends JPanel {
     		//construct as needed
             singletonSettingsPanel = new SettingsPanel(returnPanel);
             singletonSettingsPanel.setSize(600, 800);
+            singletonSettingsPanel.setOpaque(false);
     	}
     	
     	singletonSettingsPanel.setVisible(true);	//make it visible

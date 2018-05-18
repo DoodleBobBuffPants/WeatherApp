@@ -4,14 +4,10 @@ import java.time.Duration;
 
 public class JourneyAlgorithm {
 
-	public static void main(String[] args) {
-		//check for a valid journey by inspecting the weather in all periods of time for the preferred duration, and recommending alternatives if the preferred is unachievable
-	}
-
 	public static String checkJourney(LocalTime startTime, Duration duration, WeatherEnum preferredWeather, WeatherInformationParsed weeklyWeather) {
 		
 		weatherForADay dailyArray[] = weeklyWeather.getWeatherPerDay();	//array storing weather data for each day of the week as objects within an object for the week
-		if (validJourney(startTime, duration, preferredWeather, 0, dailyArray)) return "You have a valid journey today at " + startTime.toString();	//notifies the user of a valid journey as per preferences
+		if (validJourney(startTime, duration, preferredWeather, 0, dailyArray)) return "You have a valid journey today at " + startTime.getHour() + ":" + (startTime.getMinute() < 10 ? "0" + startTime.getMinute() : startTime.getMinute());	//notifies the user of a valid journey as per preferences
 
 		//variables for use in recommending a journey
 		boolean noValidJourney = true;	//loop condition for finding another journey time to recommend
