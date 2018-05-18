@@ -35,7 +35,6 @@ public class TodayScreen extends JPanel {
     	
     	//switch screens
     	returnPanel.panelMain.setVisible(true);
-    	returnPanel.remove(this);
     	returnPanel.add(returnPanel.panelMain);
     	this.setVisible(false);
     }

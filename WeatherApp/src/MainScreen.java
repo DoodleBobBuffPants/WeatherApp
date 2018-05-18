@@ -18,7 +18,9 @@ public class MainScreen extends JFrame {
     private JButton NextDay2Btn = new JButton();
     private JButton NextDay3Btn = new JButton();
     private JButton NextDay4Btn = new JButton();
-    public JPanel panelMain = new JPanel();
+    public JPanel panelMain = new JPanel(); 
+    public Image bImg;
+    public JLabel bg = new JLabel();
     
     private JButton[] nextWeekBtns = new JButton[] {NextDay1Btn, NextDay2Btn, NextDay3Btn, NextDay4Btn};	//array for buttons for days of the week
     private WeatherInformationParsed wiP;	//parsed data
@@ -82,9 +84,8 @@ public class MainScreen extends JFrame {
     }
     
     public MainScreen(String title) {
-    	super(title);	//sets window title
-    	panelMain.setLayout(new GridLayout(7, 1));
-    	
+    	super(title);	//sets title
+    	panelMain.setLayout(new GridLayout(7, 1));	//layout
     	panelMain.setOpaque(false);	//allows background
     	
     	//parse JSON
@@ -99,7 +100,6 @@ public class MainScreen extends JFrame {
         //add click listeners
         settingButton.addActionListener(actionEvent -> launchSettingsScreen());
         checkJourneyButton.addActionListener(actionEvent -> launchJourneyScreen());
-        checkJourneyButton.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
         todayButton.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[0]));
         
         for (int i = 0; i < nextWeekBtns.length; i++) {
@@ -116,12 +116,9 @@ public class MainScreen extends JFrame {
         String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
         double todayTemp = wiP.getWeatherPerDay()[0].getList().get(0).getTemp();
         todayButton.setText(today + " - " + todayTemp + " °C");
-        todayButton.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
-        todayButton.setHorizontalTextPosition(0);
-        todayButton.setVerticalTextPosition(1);
         
         //icons for each day of week button
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < nextWeekBtns.length; i++) {
         	
         	//button and day of week
             JButton btn = nextWeekBtns[i];
@@ -144,6 +141,13 @@ public class MainScreen extends JFrame {
         //make remaining iconsTransp transparent
         makeTransparent(settingButton);
         makeTransparent(todayButton);
+        
+        //stylings
+        checkJourneyButton.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+        
+        todayButton.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
+        todayButton.setHorizontalTextPosition(0);
+        todayButton.setVerticalTextPosition(1);
         
         //size and positioning of elements
         int SCREEN_WIDTH = 600;
@@ -188,19 +192,33 @@ public class MainScreen extends JFrame {
         
         //adds adaptive background
         String bgName = wiP.getWeatherPerDay()[0].getList().get(0).getWeatherForBackground();
-        JLabel bg = new JLabel(new ImageIcon("resources/" + bgName + ".png"));
+        try {
+            bImg = ImageIO.read(new File("resources/" + bgName + ".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bImg = bImg.getScaledInstance(panelMain.getWidth(), panelMain.getHeight(), Image.SCALE_SMOOTH);
+        bg.setIcon(new ImageIcon(bImg));
         this.setContentPane(bg);
-        
     }
-
+    
+    @Override
+    public void paint(Graphics g) {
+    	super.paint(g);
+    	bImg = bImg.getScaledInstance(panelMain.getParent().getWidth(), panelMain.getParent().getHeight(), Image.SCALE_SMOOTH);
+    	bg.setIcon(new ImageIcon(bImg));
+    	bg.setSize(panelMain.getParent().getWidth(), panelMain.getParent().getHeight());
+    }
+    
     public static void main(String[] args) {
-    	
-        MainScreen app = new MainScreen("CYCLONE");	//creates instance of application
+
+        MainScreen home = new MainScreen("SKYCLONE");	//creates instance of home screen
         
         //sets parameters and displays window
-        app.add(app.panelMain);
-        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        app.pack();
-        app.setVisible(true);
+        home.setLayout(new BorderLayout());
+        home.add(home.panelMain, BorderLayout.CENTER);
+        home.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        home.pack();
+        home.setVisible(true);
     }
 }

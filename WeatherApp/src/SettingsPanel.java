@@ -73,7 +73,6 @@ public class SettingsPanel extends JPanel {
     	
     	//switch panels
     	returnPanel.panelMain.setVisible(true);
-    	returnPanel.remove(this);
     	returnPanel.add(returnPanel.panelMain);
     	this.setVisible(false);
     }

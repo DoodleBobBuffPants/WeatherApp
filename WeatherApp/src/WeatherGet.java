@@ -115,6 +115,7 @@ public class WeatherGet {
             thisPeriod.setWindSpeed(thisPeriodOld.getWind().getSpeed());
             thisPeriod.setWindDirection(thisPeriodOld.getWind().getDeg());
             
+            //for when rain data isn't available
             try {
             	thisPeriod.setRainAmount(thisPeriodOld.getRain().getAmount());
             } catch (Exception e) {
