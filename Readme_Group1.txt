@@ -26,4 +26,4 @@ Jna-platform-4.4.0
 LGoodDatePicker-10.3.1
 
 
-Most of these come with maven and allow http clients and connections to be made. Jackson is for JSON parsing as it makes it very easy with the ObjectMapper. The date picker is used in the settings screen for easy selection of times.
+Most of these come with maven and allow http clients and connections to be made. Jackson is for JSON parsing as it makes it very easy with the ObjectMapper. The date picker is used in the settings screen for easy selection of times, and because it was the only one we could find that lets us do the job on desktop.
