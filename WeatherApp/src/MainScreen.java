@@ -80,13 +80,13 @@ public class MainScreen extends JFrame {
 			System.out.println(e.getMessage());
 		}
     	
-    	addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(0).getIconPath().toString());
+    	addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
     	for (int i = 0; i < 4; i++) {
 
             JButton btn = nextWeekBtns[i];
             String day = wiP.getWeatherPerDay()[i + 1].getDayOfWeek();
-            addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(0).getIconPath().toString());
-            double temperature = wiP.getWeatherPerDay()[i + 1].getList().get(0).getTemp();
+            addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());
+            double temperature = 0.5 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]));
             btn.setText(day + " - " + temperature);
             
         }
@@ -120,11 +120,11 @@ public class MainScreen extends JFrame {
         
         //add image icons to each button
         addIcon(settingButton, SETTINGS_ICON_PATH);
-        addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(0).getIconPath().toString());
+        addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
         
         //today button information is added
         String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
-        double todayTemp = wiP.getWeatherPerDay()[0].getList().get(0).getTemp();
+        double todayTemp = 0.5 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]));
         todayButton.setText(today + " - " + todayTemp + " °C");
         
         //icons for each day of week button
@@ -134,9 +134,9 @@ public class MainScreen extends JFrame {
             JButton btn = nextWeekBtns[i];
             String day = wiP.getWeatherPerDay()[i + 1].getDayOfWeek();
 
-            addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(0).getIconPath().toString());	//icon for this button
+            addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());	//icon for this button
             
-            double temperature = wiP.getWeatherPerDay()[i + 1].getList().get(0).getTemp();	//temperature
+            double temperature = 0.5 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]));	//temperature
             btn.setText(day + " - " + temperature + " °C");	//button text
             makeTransparent(btn);	//visual property
             
@@ -187,6 +187,28 @@ public class MainScreen extends JFrame {
         
         panelMain.setVisible(true);	//make content visible
         
+    }
+
+    private double getMinimumTemperature(weatherForADay todayWeather)
+    {
+        double minTemp = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < todayWeather.getList().size(); i++)
+        {
+            if(todayWeather.getList().get(i).getTemp_min() < minTemp)
+                minTemp = todayWeather.getList().get(i).getTemp_min();
+        }
+        return minTemp;
+    }
+
+    private double getMaximumTemperature(weatherForADay todayWeather)
+    {
+        double maxTemp = Double.NEGATIVE_INFINITY;
+        for (int i = 0; i < todayWeather.getList().size(); i++)
+        {
+            if(todayWeather.getList().get(i).getTemp_min() > maxTemp)
+                maxTemp = todayWeather.getList().get(i).getTemp_min();
+        }
+        return maxTemp;
     }
     
     private void setBorderColors() {

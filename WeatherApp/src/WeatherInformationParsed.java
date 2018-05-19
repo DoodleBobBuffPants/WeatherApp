@@ -6,6 +6,16 @@ public class WeatherInformationParsed {
 	//essential attributes for this weekly view
     private String cityName = "";
     private String countryName = "";
+    private int population = 0;
+
+    public int getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(int population) {
+        this.population = population;
+    }
+
     private weatherForADay[] weatherPerDay = new weatherForADay[5];
 
     //getters and setters

@@ -46,10 +46,18 @@ public class WeatherGet {
     	
     	//clean parsed JSON into usable information
         WeatherInformationParsed toReturn = new WeatherInformationParsed();	//cleaned object
-        
+        try
+        {
+            wd.getCity().getName();
+        }
+        catch(NullPointerException n)
+        {
+            return new WeatherInformationParsed();
+        }
         //location data
         toReturn.setCityName(wd.getCity().getName());
         toReturn.setCountryName(wd.getCity().getCountry());
+        toReturn.setPopulation(wd.getCity().getPopulation());
         
         weatherForADay[] newArray = new weatherForADay[5];	//structure for each day obtained from the API
         
