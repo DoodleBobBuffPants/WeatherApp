@@ -26,7 +26,7 @@ public class WeatherGet {
         ObjectMapper objectMapper = new ObjectMapper();	//constructs our object from JSON
         HttpGet getCommand = new HttpGet("http://api.openweathermap.org/data/2.5/forecast?q=" + city + ",uk&mode=json&appid=3f69dfc43f5609b2b1ff6217eb940866");
         WeatherData wd = (WeatherData) getContent(WeatherData.class, getCommand, httpClient, objectMapper);	//parse data
-        WeatherInformationParsed wiP = convertFromWeatherDataToWeatherInformationParse(wd);	//cleans the parsed so we can use it as needed
+        WeatherInformationParsed wiP = convertFromWeatherDataToWeatherInformationParse(wd);	//cleans the parsed data so we can use it as needed
         return wiP;
     }
     
@@ -46,14 +46,7 @@ public class WeatherGet {
     	
     	//clean parsed JSON into usable information
         WeatherInformationParsed toReturn = new WeatherInformationParsed();	//cleaned object
-        try
-        {
-            wd.getCity().getName();
-        }
-        catch(NullPointerException n)
-        {
-            return new WeatherInformationParsed();
-        }
+
         //location data
         toReturn.setCityName(wd.getCity().getName());
         toReturn.setCountryName(wd.getCity().getCountry());

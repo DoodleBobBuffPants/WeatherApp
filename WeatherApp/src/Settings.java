@@ -1,14 +1,19 @@
 //imports
 import java.time.LocalTime;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.Duration;
 //class to store preferences
 public class Settings {
 	
 	//variables for each preference
-	private static LocalTime startTime = LocalTime.now();
-	private static Duration duration = Duration.ZERO;
-	private static WeatherEnum preferredWeather = WeatherEnum.Dry;
-	private static String location = "London";
+	private static LocalTime startTime;
+	private static Duration duration;
+	private static WeatherEnum preferredWeather;
+	private static String location;
 	
 	//getters and setters for each preference
 	public static void setStartTime(LocalTime newStart) {
@@ -27,7 +32,7 @@ public class Settings {
 		return duration;
 	}
 	
-	public static void setpreferredWeather(WeatherEnum newPreferredWeather) {
+	public static void setPreferredWeather(WeatherEnum newPreferredWeather) {
 		preferredWeather = newPreferredWeather;
 	}
 	
@@ -41,5 +46,40 @@ public class Settings {
 	
 	public static String getLocation() {
 		return location;
+	}
+	
+	public static void saveSettings() {
+		//write to settings file
+		try {
+		    PrintWriter saver = new PrintWriter(new FileWriter("settings.txt", false));
+		    saver.println(getStartTime().toString());
+		    saver.println(getDuration().toString());
+		    saver.println(getPreferredWeather().toString());
+		    saver.println(getLocation());
+		    saver.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		} 
+	}
+	
+	public static void loadSettings() {
+		//loads from setting file
+		try (BufferedReader loader = new BufferedReader(new FileReader("settings.txt"))) {
+		    String line = loader.readLine();
+		    setStartTime(LocalTime.parse(line));
+		    line = loader.readLine();
+		    setDuration(Duration.parse(line));
+		    line = loader.readLine();
+		    for (WeatherEnum we: WeatherEnum.values()) {
+		    	if (we.toString().equals(line)) {
+		    		setPreferredWeather(we); break;
+		    	}
+		    }
+		    line = loader.readLine();
+		    setLocation(line);
+		    loader.close();
+		} catch (IOException e) {
+		    e.printStackTrace();
+		} 
 	}
 }

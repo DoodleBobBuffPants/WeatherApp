@@ -25,13 +25,13 @@ public class MainScreen extends JFrame {
     private JButton[] nextWeekBtns = new JButton[] {NextDay1Btn, NextDay2Btn, NextDay3Btn, NextDay4Btn};	//array for buttons for days of the week
     private WeatherInformationParsed wiP;	//parsed data
     
-    //icons
-    private String SETTINGS_ICON_PATH = "resources/settings-cog.png";
+    private String SETTINGS_ICON_PATH = "resources/settings-cog.png";	//setting icon path
 
     //following three methods will take care of screen transitions
     private void launchSettingsScreen() {
     	this.add(SettingsPanel.getInstance(this));
     	panelMain.setVisible(false);
+    	checkJourneyButton.setText("Check journey");
     }
 
     private void launchJourneyScreen() {
@@ -52,6 +52,7 @@ public class MainScreen extends JFrame {
     private void launchDailyScreen(weatherForADay dayWeather) {
     	this.add(new TodayScreen(this, dayWeather));
     	panelMain.setVisible(false);
+    	checkJourneyButton.setText("Check journey");
     }
 
     //turns background of buttons transparent
@@ -72,24 +73,27 @@ public class MainScreen extends JFrame {
     
     //updates information as in constructor
     public void updateData() {
-    	try {
+		try {
 			wiP = WeatherGet.run(Settings.getLocation());
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		} catch (RequestFailed e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
     	
     	addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
-    	for (int i = 0; i < 4; i++) {
+    	for (int i = 0; i < nextWeekBtns.length; i++) {
 
             JButton btn = nextWeekBtns[i];
             String day = wiP.getWeatherPerDay()[i + 1].getDayOfWeek();
             addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());
-            double temperature = 0.5 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]));
+            double temperature = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]))) / 100;
             btn.setText(day + " - " + temperature);
             
         }
+    	
+    	//updates settings
+    	Settings.saveSettings();
     	
     }
     
@@ -136,7 +140,7 @@ public class MainScreen extends JFrame {
 
             addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());	//icon for this button
             
-            double temperature = 0.5 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]));	//temperature
+            double temperature = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]))) / 100;	//temperature to 2 d.p.
             btn.setText(day + " - " + temperature + " °C");	//button text
             makeTransparent(btn);	//visual property
             
@@ -189,23 +193,21 @@ public class MainScreen extends JFrame {
         
     }
 
-    private double getMinimumTemperature(weatherForADay todayWeather)
-    {
+    private double getMinimumTemperature(weatherForADay todayWeather) {
+    	//linear search for min temp
         double minTemp = Double.POSITIVE_INFINITY;
-        for (int i = 0; i < todayWeather.getList().size(); i++)
-        {
-            if(todayWeather.getList().get(i).getTemp_min() < minTemp)
+        for (int i = 0; i < todayWeather.getList().size(); i++) {
+            if (todayWeather.getList().get(i).getTemp_min() < minTemp)
                 minTemp = todayWeather.getList().get(i).getTemp_min();
         }
         return minTemp;
     }
 
-    private double getMaximumTemperature(weatherForADay todayWeather)
-    {
+    private double getMaximumTemperature(weatherForADay todayWeather) {
+    	//linear search for max temp
         double maxTemp = Double.NEGATIVE_INFINITY;
-        for (int i = 0; i < todayWeather.getList().size(); i++)
-        {
-            if(todayWeather.getList().get(i).getTemp_min() > maxTemp)
+        for (int i = 0; i < todayWeather.getList().size(); i++) {
+            if (todayWeather.getList().get(i).getTemp_min() > maxTemp)
                 maxTemp = todayWeather.getList().get(i).getTemp_min();
         }
         return maxTemp;
@@ -246,6 +248,8 @@ public class MainScreen extends JFrame {
     public static void main(String[] args) {
 
         MainScreen home = new MainScreen("SKYCLONE");	//creates instance of home screen
+        
+        Settings.loadSettings();	//loads stored settings
         
         //sets parameters and displays window
         home.setLayout(new BorderLayout());

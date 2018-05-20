@@ -8,6 +8,7 @@ import java.util.List;
 
 public class TodayScreen extends JPanel {
 
+	//variables for return screen and weather to show
 	private MainScreen returnPanel;
 	private weatherForADay todayWeather;
 	
@@ -32,27 +33,26 @@ public class TodayScreen extends JPanel {
         
     }
 
-    private double getMinimumTemperature()
-    {
+    private double getMinimumTemperature() {
+    	//linear search for min temp
         double minTemp = Double.POSITIVE_INFINITY;
-        for (int i = 0; i < todayWeather.getList().size(); i++)
-        {
-            if(todayWeather.getList().get(i).getTemp_min() < minTemp)
+        for (int i = 0; i < todayWeather.getList().size(); i++) {
+            if (todayWeather.getList().get(i).getTemp_min() < minTemp)
                 minTemp = todayWeather.getList().get(i).getTemp_min();
         }
         return minTemp;
     }
 
-    private double getMaximumTemperature()
-    {
+    private double getMaximumTemperature() {
+    	//linear search for max temp
         double maxTemp = Double.NEGATIVE_INFINITY;
-        for (int i = 0; i < todayWeather.getList().size(); i++)
-        {
-            if(todayWeather.getList().get(i).getTemp_min() > maxTemp)
+        for (int i = 0; i < todayWeather.getList().size(); i++) {
+            if (todayWeather.getList().get(i).getTemp_min() > maxTemp)
                 maxTemp = todayWeather.getList().get(i).getTemp_min();
         }
         return maxTemp;
     }
+    
     private void backToMain() {
     	
     	//switch screens
@@ -93,56 +93,51 @@ public class TodayScreen extends JPanel {
         
         Collections.sort(periodData, (d1, d2) -> d1.getTime().getHour() - d2.getTime().getHour());	//sorts the data by time
         
-        center.setLayout(new GridLayout(0, 5));	//structures the data
-        
         //add times to panel, ignoring duplicate
         int index = (periodData.get(0).getTime() == periodData.get(periodData.size() - 1).getTime() ? periodData.size() - 1 : periodData.size());
+        
+        center.setLayout(new GridLayout(index + 1, 5));	//structures the data
 
-        //String a = "Time\t\tWind Speed\t\tRain Amount\t\tTemperature\n";
-        JLabel a;
-        a = new JLabel("Time");
-        a.setFont(new Font("charcoal",Font.BOLD, 23));
-        a.setHorizontalAlignment(JLabel.CENTER);
-        a.setVerticalAlignment(JLabel.CENTER);
-        a.setBorder(new EmptyBorder(20, 10, 20, 10));
-        center.add(a);
+        //adds headers for each field
+        JLabel varLbl = new JLabel("Time");
+        varLbl.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+        varLbl.setHorizontalAlignment(JLabel.CENTER);
+        varLbl.setVerticalAlignment(JLabel.CENTER);
+        varLbl.setBorder(new EmptyBorder(20, 10, 20, 10));
+        center.add(varLbl);
 
-        a = new JLabel("Icon");
-        a.setFont(new Font("charcoal",Font.BOLD, 23));
-        a.setHorizontalAlignment(JLabel.CENTER);
-        a.setVerticalAlignment(JLabel.CENTER);
-        a.setBorder(new EmptyBorder(20, 10, 20, 10));
-        center.add(a);
+        varLbl = new JLabel("Icon");
+        varLbl.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+        varLbl.setHorizontalAlignment(JLabel.CENTER);
+        varLbl.setVerticalAlignment(JLabel.CENTER);
+        varLbl.setBorder(new EmptyBorder(20, 10, 20, 10));
+        center.add(varLbl);
 
-        a = new JLabel("Wind");
-        a.setFont(new Font("charcoal", Font.BOLD, 23));
-        a.setHorizontalAlignment(JLabel.CENTER);
-        a.setVerticalAlignment(JLabel.CENTER);
-        a.setBorder(new EmptyBorder(20, 10, 20, 10));
-        center.add(a);
-        a = new JLabel("Rain");
-        a.setFont(new Font("charcoal",Font.BOLD, 23));
-        a.setHorizontalAlignment(JLabel.CENTER);
-        a.setVerticalAlignment(JLabel.CENTER);
-        a.setBorder(new EmptyBorder(20, 10, 20, 10));
-        center.add(a);
-        a = new JLabel("Temp");
-        a.setFont(new Font("charcoal", Font.BOLD, 23));
-        a.setHorizontalAlignment(JLabel.CENTER);
-        a.setVerticalAlignment(JLabel.CENTER);
-        a.setBorder(new EmptyBorder(20, 10, 20, 10));
-        center.add(a);
+        varLbl = new JLabel("Wind");
+        varLbl.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+        varLbl.setHorizontalAlignment(JLabel.CENTER);
+        varLbl.setVerticalAlignment(JLabel.CENTER);
+        varLbl.setBorder(new EmptyBorder(20, 10, 20, 10));
+        center.add(varLbl);
+        
+        varLbl = new JLabel("Rain");
+        varLbl.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+        varLbl.setHorizontalAlignment(JLabel.CENTER);
+        varLbl.setVerticalAlignment(JLabel.CENTER);
+        varLbl.setBorder(new EmptyBorder(20, 10, 20, 10));
+        center.add(varLbl);
+        
+        varLbl = new JLabel("Temp");
+        varLbl.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+        varLbl.setHorizontalAlignment(JLabel.CENTER);
+        varLbl.setVerticalAlignment(JLabel.CENTER);
+        varLbl.setBorder(new EmptyBorder(20, 10, 20, 10));
+        center.add(varLbl);
 
-
-        for (int i = 0; i < index; i++){
-            if(i > 0) {
-                if (periodData.get(i).getTime().toString().equals(periodData.get(i - 1).getTime().toString()))
-                    continue;
-            }
-            String data = periodData.get(i).getTime().toString() + "\t" + periodData.get(i).getWindSpeed() + " m/s" + "\t" + periodData.get(i).getRainAmount() + " mm" + "\t" + periodData.get(i).getTemp() + "°C";
+        for (int i = 0; i < index; i++) {
 
             JLabel time = new JLabel(periodData.get(i).getTime().toString());
-            time.setFont(new Font("charcoal", Font.ITALIC, 23));
+            time.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
             time.setHorizontalAlignment(JLabel.CENTER);
             time.setVerticalAlignment(JLabel.CENTER);
             center.add(time);
@@ -155,20 +150,20 @@ public class TodayScreen extends JPanel {
             imageIcon.add(new JLabel(new ImageIcon(tiTemp)), JLabel.CENTER);
             center.add(imageIcon);
 
-            JLabel windSpeed = new JLabel(periodData.get(i).getWindSpeed() + "m/s");
-            windSpeed.setFont(new Font("charcoal", Font.ITALIC, 23));
+            JLabel windSpeed = new JLabel(periodData.get(i).getWindSpeed() + " m/s");
+            windSpeed.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
             windSpeed.setHorizontalAlignment(JLabel.CENTER);
             windSpeed.setVerticalAlignment(JLabel.CENTER);
             center.add(windSpeed);
 
-            JLabel rainAmount = new JLabel(periodData.get(i).getRainAmount() + "mm");
-            rainAmount.setFont(new Font("charcoal", Font.ITALIC, 23));
+            JLabel rainAmount = new JLabel(periodData.get(i).getRainAmount() + " mm");
+            rainAmount.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
             rainAmount.setHorizontalAlignment(JLabel.CENTER);
             rainAmount.setVerticalAlignment(JLabel.CENTER);
             center.add(rainAmount);
 
-            JLabel temp = new JLabel(periodData.get(i).getTemp() + "°C");
-            temp.setFont(new Font("charcoal", Font.ITALIC, 23));
+            JLabel temp = new JLabel(periodData.get(i).getTemp() + " °C");
+            temp.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
             temp.setHorizontalAlignment(JLabel.CENTER);
             temp.setVerticalAlignment(JLabel.CENTER);
             center.add(temp);
@@ -226,7 +221,7 @@ public class TodayScreen extends JPanel {
         weatherData.add(hLabel);
         weatherData.add(lLabel);
         weatherData.add(wLabel);
-        weatherData.setAlignmentX(LEFT_ALIGNMENT);
+        weatherData.setAlignmentX(JPanel.LEFT_ALIGNMENT);
         mainData.add(weatherData);
 
         top.add(mainData, BorderLayout.CENTER);	//centralises the data

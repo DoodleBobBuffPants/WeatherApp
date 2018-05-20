@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -70,7 +70,7 @@ public class SettingsPanel extends JPanel {
     	//update settings
     	Settings.setDuration(getDurationOfCycle());
     	Settings.setLocation(getLocationName());
-    	Settings.setpreferredWeather(getPreferredWeather());
+    	Settings.setPreferredWeather(getPreferredWeather());
     	Settings.setStartTime(getPreferredTime());
     	
     	returnPanel.updateData();	//update according to new settings
@@ -91,7 +91,7 @@ public class SettingsPanel extends JPanel {
 	        
 	        //each preference
 	        addLabel("Preferred Time");
-	        Date date = Date.from(Instant.now());
+	        Date date = Date.from(Settings.getStartTime().atDate(LocalDate.of(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH)).atZone(ZoneId.systemDefault()).toInstant());
 	        SpinnerDateModel sdm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
 	        timePicker = new JSpinner(sdm);
 	        JSpinner.DateEditor de = new JSpinner.DateEditor(timePicker, "HH:mm");
@@ -103,7 +103,7 @@ public class SettingsPanel extends JPanel {
 
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
-	        durationDropdown.setSelectedIndex(0);
+	        durationDropdown.setSelectedItem(Settings.getDuration());
 	        durationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
 	        ((JLabel) durationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 	        durationDropdown.setBackground(new Color(198, 240, 254, 100));
@@ -111,7 +111,7 @@ public class SettingsPanel extends JPanel {
 
 	        addLabel("Preferred Weather");
 	        weatherDropdown = new JComboBox<WeatherEnum>(WeatherEnum.values());
-	        weatherDropdown.setSelectedIndex(0);
+	        weatherDropdown.setSelectedItem(Settings.getPreferredWeather());
 	        weatherDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
 	        ((JLabel) weatherDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 	        weatherDropdown.setBackground(new Color(198, 240, 254, 100));
@@ -119,7 +119,7 @@ public class SettingsPanel extends JPanel {
 
 	        addLabel("Your Location");
 	        locationDropdown = new JComboBox<String>(cities.toArray(new String[0]));
-	        locationDropdown.setSelectedIndex(0);
+	        locationDropdown.setSelectedItem(Settings.getLocation());
 	        locationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
 	        ((JLabel) locationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 	        locationDropdown.setBackground(new Color(198, 240, 254, 255));

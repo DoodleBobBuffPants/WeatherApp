@@ -7,7 +7,9 @@ public class WeatherInformationParsed {
     private String cityName = "";
     private String countryName = "";
     private int population = 0;
+    private weatherForADay[] weatherPerDay = new weatherForADay[5];
 
+    //getters and setters
     public int getPopulation() {
         return population;
     }
@@ -15,10 +17,7 @@ public class WeatherInformationParsed {
     public void setPopulation(int population) {
         this.population = population;
     }
-
-    private weatherForADay[] weatherPerDay = new weatherForADay[5];
-
-    //getters and setters
+    
     public String getCityName() {
         return cityName;
     }

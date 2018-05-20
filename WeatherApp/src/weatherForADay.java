@@ -5,9 +5,9 @@ import java.util.List;
 public class weatherForADay {
 	
     private List<weatherForAThreeHourlyPeriod> list = new ArrayList<>();	//list of weather information for each 3-hourly period
-    private String dayOfWeek;
+    private String dayOfWeek;	//day of week
     
-    //list getter and setter
+    //getters and setters
     public List<weatherForAThreeHourlyPeriod> getList() {
         return list;
     }
