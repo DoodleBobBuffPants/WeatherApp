@@ -124,7 +124,7 @@ public class MainScreen extends JFrame {
         
         //today button information is added
         String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
-        double todayTemp = 0.5 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]));
+        double todayTemp = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]))) / 100;
         todayButton.setText(today + " - " + todayTemp + " °C");
         
         //icons for each day of week button
