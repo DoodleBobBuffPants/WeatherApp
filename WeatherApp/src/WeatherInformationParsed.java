@@ -1,4 +1,7 @@
-public class WeatherInformationParsed {
+//necessary imports
+import java.io.Serializable;
+
+public class WeatherInformationParsed implements Serializable {
 	
 	//class to use parsed JSON data
 	//this is essentially a 5-day structure to view 5 days of weather information

@@ -77,8 +77,6 @@ public class MainScreen extends JFrame {
 			wiP = WeatherGet.run(Settings.getLocation());
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (RequestFailed e) {
-			e.printStackTrace();
 		}
     	
     	addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
@@ -106,8 +104,6 @@ public class MainScreen extends JFrame {
     	try {
 			wiP = WeatherGet.run("London");
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		} catch (RequestFailed e) {
 			System.out.println(e.getMessage());
 		}
     	

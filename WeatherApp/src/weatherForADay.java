@@ -1,8 +1,9 @@
 //necessary imports
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class weatherForADay {
+public class weatherForADay implements Serializable {
 	
     private List<weatherForAThreeHourlyPeriod> list = new ArrayList<>();	//list of weather information for each 3-hourly period
     private String dayOfWeek;	//day of week

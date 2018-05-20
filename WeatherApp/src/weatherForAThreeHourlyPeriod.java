@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.io.Serializable;
 
-public class weatherForAThreeHourlyPeriod {
+public class weatherForAThreeHourlyPeriod implements Serializable {
 	
 	//variables corresponding to data from API
     private Date dateAndTime = new Date();
