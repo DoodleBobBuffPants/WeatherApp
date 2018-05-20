@@ -176,7 +176,7 @@ public class MainScreen extends JFrame {
 
         todayButton.setBounds(WIDTH_CENTER - SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 8, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4);
         panelMain.add(todayButton);
-
+        
         for (int i = 0; i < nextWeekBtns.length; i++) {
             JButton currentBtn = nextWeekBtns[i];
             currentBtn.setBounds(i * SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 4, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
