@@ -6,9 +6,14 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class MainScreen extends JFrame {
 	
@@ -89,16 +94,42 @@ public class MainScreen extends JFrame {
                 launchDailyScreen(wiP.getWeatherPerDay()[0]);
             }
         });
-        JButton icon = new JButton();
-        addIcon(icon, wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
+        double average = getAverageWind(wiP.getWeatherPerDay()[0]);
 
-        JLabel descriptionText = new JLabel();
+        DecimalFormat formatter = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance( Locale.ENGLISH ));
+        formatter.setRoundingMode( RoundingMode.UP );
+        String s = formatter.format(average);
+
+        JLabel averageWind = new JLabel(s + " m/s", SwingConstants.CENTER);
+        averageWind.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
+        averageWind.setHorizontalTextPosition(SwingConstants.CENTER);
+        averageWind.setVerticalTextPosition(SwingConstants.CENTER);
+        JButton icon = new JButton();
+        icon.setText("Today");
+        icon.setFont(new Font("charcoal", Font.BOLD, 21));
+        icon.setHorizontalTextPosition(0);
+        icon.setVerticalTextPosition(SwingConstants.TOP);
+
+        ImageIcon temp = new ImageIcon(wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
+        Image img = temp.getImage();
+        Image newimg = img.getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH ) ;
+        Icon iconNew = new ImageIcon(newimg);
+        icon.setIcon(iconNew);
+
+        icon.setOpaque(false);
+        icon.setContentAreaFilled(false);
+        icon.setBorderPainted(false);
+
 
         //today button information is added
         String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
         double todayTemp = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]))) / 100;
-        descriptionText.setText("Today" + " - " + todayTemp + " °C");
+        JLabel descriptionText = new JLabel(convertToMultiline(todayTemp + " °C"), SwingConstants.CENTER);
 
+        descriptionText.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
+        descriptionText.setHorizontalTextPosition(SwingConstants.CENTER);
+        descriptionText.setVerticalTextPosition(SwingConstants.CENTER);
+        todayButton.add(averageWind);
         todayButton.add(icon);
         todayButton.add(descriptionText);
 
@@ -176,12 +207,35 @@ public class MainScreen extends JFrame {
         //add image icons to each button
         addIcon(settingButton, SETTINGS_ICON_PATH);
         double average = getAverageWind(wiP.getWeatherPerDay()[0]);
-        JLabel averageWind = new JLabel(Double.toString(average), SwingConstants.CENTER);
+
+        DecimalFormat formatter = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance( Locale.ENGLISH ));
+        formatter.setRoundingMode( RoundingMode.UP );
+        String s = formatter.format(average);
+
+        JLabel averageWind = new JLabel(s + " m/s", SwingConstants.CENTER);
         averageWind.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
         averageWind.setHorizontalTextPosition(SwingConstants.CENTER);
         averageWind.setVerticalTextPosition(SwingConstants.CENTER);
+        averageWind.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                launchDailyScreen(wiP.getWeatherPerDay()[0]);
+            }
+        });
+
         JButton icon = new JButton();
-        addIcon(icon, wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
+        icon.setText("Today");
+        icon.setFont(new Font("charcoal", Font.BOLD, 21));
+        icon.setHorizontalTextPosition(0);
+        icon.setVerticalTextPosition(SwingConstants.TOP);
+
+        ImageIcon temp = new ImageIcon(wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
+        Image img = temp.getImage();
+        Image newimg = img.getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH ) ;
+        Icon iconNew = new ImageIcon(newimg);
+        icon.setIcon(iconNew);
+        icon.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[0]));
+
         icon.setOpaque(false);
         icon.setContentAreaFilled(false);
         icon.setBorderPainted(false);
@@ -190,11 +244,18 @@ public class MainScreen extends JFrame {
         //today button information is added
         String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
         double todayTemp = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]))) / 100;
-        JLabel descriptionText = new JLabel(convertToMultiline("Today" + "\n" + todayTemp + " °C"), SwingConstants.CENTER);
+        JLabel descriptionText = new JLabel(convertToMultiline(todayTemp + " °C"), SwingConstants.CENTER);
 
         descriptionText.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
         descriptionText.setHorizontalTextPosition(SwingConstants.CENTER);
         descriptionText.setVerticalTextPosition(SwingConstants.CENTER);
+        descriptionText.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                launchDailyScreen(wiP.getWeatherPerDay()[0]);
+            }
+        });
+
         todayButton.add(averageWind);
         todayButton.add(icon);
         todayButton.add(descriptionText);
