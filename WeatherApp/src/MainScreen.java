@@ -25,6 +25,7 @@ public class MainScreen extends JFrame {
     private JPanel NextDay2Btn = new JPanel();
     private JPanel NextDay3Btn = new JPanel();
     private JPanel NextDay4Btn = new JPanel();
+    private JPanel nextBtns = new JPanel();
     public JPanel panelMain = new JPanel(); 
     public Image bImg;
     public JLabel bg = new JLabel();
@@ -86,8 +87,11 @@ public class MainScreen extends JFrame {
 			e.printStackTrace();
 		}
 
-
+        panelMain.remove(todayButton);
+		panelMain.remove(nextBtns);
+        nextBtns.removeAll();
 		todayButton = new JPanel();
+		todayButton.setOpaque(false);
         todayButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -135,7 +139,8 @@ public class MainScreen extends JFrame {
 
         for (int i = 0; i < nextWeekBtns.length; i++) {
 
-            JPanel item = new JPanel();
+            JPanel item = nextWeekBtns[i];
+            item.removeAll();
             item.setOpaque(false);
             //button and day of week
             JButton btn = new JButton();
@@ -166,7 +171,22 @@ public class MainScreen extends JFrame {
             item.add(secondBit);
             
         }
-    	
+
+        nextBtns = new JPanel();
+        nextBtns.setLayout(new GridLayout(0, 4));
+        nextBtns.setOpaque(false);
+        int SCREEN_WIDTH = 600;
+        int SCREEN_HEIGHT = 800;
+        for (int i = 0; i < nextWeekBtns.length; i++) {
+            JPanel currentBtn = nextWeekBtns[i];
+            currentBtn.setBounds(i * SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 4, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
+            nextBtns.add(currentBtn);
+            //panelMain.add(currentBtn);
+        }
+
+        panelMain.add(todayButton);
+        panelMain.add(nextBtns);
+
     	//updates settings
     	Settings.saveSettings();
     	
@@ -321,7 +341,7 @@ public class MainScreen extends JFrame {
         todayButton.setBounds(WIDTH_CENTER - SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 8, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4);
         panelMain.add(todayButton);
 
-        JPanel nextBtns = new JPanel();
+        nextBtns = new JPanel();
         nextBtns.setLayout(new GridLayout(0, 4));
         nextBtns.setOpaque(false);
         for (int i = 0; i < nextWeekBtns.length; i++) {
