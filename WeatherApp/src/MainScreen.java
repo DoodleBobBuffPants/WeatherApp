@@ -14,15 +14,15 @@ public class MainScreen extends JFrame {
     private JButton settingButton = new JButton();
     private JButton checkJourneyButton = new JButton();
     private JButton todayButton = new JButton();
-    private JButton NextDay1Btn = new JButton();
-    private JButton NextDay2Btn = new JButton();
-    private JButton NextDay3Btn = new JButton();
-    private JButton NextDay4Btn = new JButton();
+    private JPanel NextDay1Btn = new JPanel();
+    private JPanel NextDay2Btn = new JPanel();
+    private JPanel NextDay3Btn = new JPanel();
+    private JPanel NextDay4Btn = new JPanel();
     public JPanel panelMain = new JPanel(); 
     public Image bImg;
     public JLabel bg = new JLabel();
     
-    private JButton[] nextWeekBtns = new JButton[] {NextDay1Btn, NextDay2Btn, NextDay3Btn, NextDay4Btn};	//array for buttons for days of the week
+    private JPanel[] nextWeekBtns = new JPanel[] {NextDay1Btn, NextDay2Btn, NextDay3Btn, NextDay4Btn};	//array for buttons for days of the week
     private WeatherInformationParsed wiP;	//parsed data
     
     private String SETTINGS_ICON_PATH = "resources/settings-cog.png";	//setting icon path
@@ -82,11 +82,35 @@ public class MainScreen extends JFrame {
     	addIcon(todayButton, wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
     	for (int i = 0; i < nextWeekBtns.length; i++) {
 
-            JButton btn = nextWeekBtns[i];
+            JPanel item = new JPanel();
+            item.setOpaque(false);
+            //button and day of week
+            JButton btn = new JButton();
+            btn.setOpaque(false);
+            btn.setContentAreaFilled(false);
+            btn.setBorderPainted(false);
+            final int j = i;
+            btn.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[j + 1]));
+
             String day = wiP.getWeatherPerDay()[i + 1].getDayOfWeek();
-            addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());
-            double temperature = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]))) / 100;
-            btn.setText(day + " - " + temperature);
+
+            addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());	//icon for this button
+
+            double temperature = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]))) / 100;	//temperature to 2 d.p.
+            btn.setText(day);	//button text
+            makeTransparent(btn);	//visual property
+
+            //sets font
+            btn.setFont(new Font("charcoal", Font.BOLD, 21));
+
+            //text goes above image
+            btn.setHorizontalTextPosition(0);
+            btn.setVerticalTextPosition(1);
+            item.add(btn);
+
+            JLabel secondBit = new JLabel(temperature + " °C");
+            secondBit.setFont(new Font("charcoal", Font.PLAIN, 23));
+            item.add(secondBit);
             
         }
     	
@@ -97,9 +121,9 @@ public class MainScreen extends JFrame {
     
     public MainScreen(String title) {
     	super(title);	//sets title
-    	panelMain.setLayout(new GridLayout(7, 1));	//layout
+    	panelMain.setLayout(new GridLayout(4, 0));	//layout
     	panelMain.setOpaque(false);	//allows background
-    	
+
     	//parse JSON
     	try {
 			wiP = WeatherGet.run("London");
@@ -111,12 +135,16 @@ public class MainScreen extends JFrame {
         settingButton.addActionListener(actionEvent -> launchSettingsScreen());
         checkJourneyButton.addActionListener(actionEvent -> launchJourneyScreen());
         todayButton.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[0]));
-        
+
+
+        /*
         for (int i = 0; i < nextWeekBtns.length; i++) {
-        	JButton btn = nextWeekBtns[i];
+
+        	JPanel btn = nextWeekBtns[i];
         	final int j = i;
     		btn.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[j + 1]));
     	}
+    	*/
         
         //add image icons to each button
         addIcon(settingButton, SETTINGS_ICON_PATH);
@@ -129,23 +157,35 @@ public class MainScreen extends JFrame {
         
         //icons for each day of week button
         for (int i = 0; i < nextWeekBtns.length; i++) {
-        	
+        	JPanel item = nextWeekBtns[i];
+        	item.setOpaque(false);
         	//button and day of week
-            JButton btn = nextWeekBtns[i];
+            JButton btn = new JButton();
+            btn.setOpaque(false);
+            btn.setContentAreaFilled(false);
+            btn.setBorderPainted(false);
+            final int j = i;
+            btn.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[j + 1]));
+
             String day = wiP.getWeatherPerDay()[i + 1].getDayOfWeek();
 
             addIcon(btn, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());	//icon for this button
             
             double temperature = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]))) / 100;	//temperature to 2 d.p.
-            btn.setText(day + " - " + temperature + " °C");	//button text
+            btn.setText(day);	//button text
             makeTransparent(btn);	//visual property
             
             //sets font
-            btn.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
+            btn.setFont(new Font("charcoal", Font.BOLD, 21));
 
             //text goes above image
             btn.setHorizontalTextPosition(0);
             btn.setVerticalTextPosition(1);
+            item.add(btn);
+
+            JLabel secondBit = new JLabel(temperature + " °C");
+            secondBit.setFont(new Font("charcoal", Font.PLAIN, 23));
+            item.add(secondBit);
         }
         
         //make remaining iconsTransp transparent
@@ -176,12 +216,18 @@ public class MainScreen extends JFrame {
 
         todayButton.setBounds(WIDTH_CENTER - SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 8, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4);
         panelMain.add(todayButton);
-        
+
+        JPanel nextBtns = new JPanel();
+        nextBtns.setLayout(new GridLayout(0, 4));
+        nextBtns.setOpaque(false);
         for (int i = 0; i < nextWeekBtns.length; i++) {
-            JButton currentBtn = nextWeekBtns[i];
+            JPanel currentBtn = nextWeekBtns[i];
             currentBtn.setBounds(i * SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 4, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
-            panelMain.add(currentBtn);
+            nextBtns.add(currentBtn);
+            //panelMain.add(currentBtn);
         }
+
+        panelMain.add(nextBtns);
 
         setBorderColors();	//add style
         
@@ -217,7 +263,7 @@ public class MainScreen extends JFrame {
         checkJourneyButton.setContentAreaFilled(false);
     	todayButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
         for(int i = 0; i < nextWeekBtns.length; i++) {
-        	JButton btn = nextWeekBtns[i];
+        	JPanel btn = nextWeekBtns[i];
             btn.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
         }
         
