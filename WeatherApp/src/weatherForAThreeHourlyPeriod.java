@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.io.Serializable;
 
-public class weatherForAThreeHourlyPeriod {
+public class weatherForAThreeHourlyPeriod implements Serializable {
 	
 	//variables corresponding to data from API
     private Date dateAndTime = new Date();
@@ -22,6 +23,7 @@ public class weatherForAThreeHourlyPeriod {
     private double windDirection = 0;
     private double rainAmount = 0;
 
+    //setters and getters for data
     public String getWeatherForBackground() {
         return weatherForBackground;
     }
@@ -29,8 +31,7 @@ public class weatherForAThreeHourlyPeriod {
     public void setWeatherForBackground(String weatherForBackground) {
         this.weatherForBackground = weatherForBackground;
     }
-
-    //setters and getters for data
+    
     public LocalTime getTime() {
         return time;
     }
