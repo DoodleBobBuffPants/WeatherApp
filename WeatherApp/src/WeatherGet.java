@@ -6,7 +6,12 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
@@ -15,7 +20,7 @@ import java.util.Calendar;
 
 public class WeatherGet {
     
-    public static WeatherInformationParsed run(String city) throws IOException, RequestFailed {
+    public static WeatherInformationParsed run(String city) throws IOException {
     	int timeoutInSeconds = 5;	//connection timeout
         city = city.replaceAll(" ", "&");	//need "&" instead of " " to search
         
@@ -25,9 +30,45 @@ public class WeatherGet {
         
         ObjectMapper objectMapper = new ObjectMapper();	//constructs our object from JSON
         HttpGet getCommand = new HttpGet("http://api.openweathermap.org/data/2.5/forecast?q=" + city + ",uk&mode=json&appid=3f69dfc43f5609b2b1ff6217eb940866");
-        WeatherData wd = (WeatherData) getContent(WeatherData.class, getCommand, httpClient, objectMapper);	//parse data
-        WeatherInformationParsed wiP = convertFromWeatherDataToWeatherInformationParse(wd);	//cleans the parsed so we can use it as needed
+        WeatherInformationParsed wiP = null;
+        try {
+        	WeatherData wd = (WeatherData) getContent(WeatherData.class, getCommand, httpClient, objectMapper);	//parse data
+        	wiP = convertFromWeatherDataToWeatherInformationParse(wd);	//cleans the parsed data so we can use it as needed
+        	saveCached(wiP);	//caches data
+        } catch (RequestFailed e) {
+        	//use cached data
+        	wiP = loadCached();
+        }
         return wiP;
+    }
+    
+    private static void saveCached(WeatherInformationParsed toCache) {
+    	//serializes object to save it
+    	try {
+            FileOutputStream cacheFile = new FileOutputStream("weathercache.ser");
+            ObjectOutputStream objectWriter = new ObjectOutputStream(cacheFile);
+            objectWriter.writeObject(toCache);
+            objectWriter.close();
+            cacheFile.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private static WeatherInformationParsed loadCached() {
+    	//deserializes object to load it
+    	WeatherInformationParsed cachedWeather = null;
+    	 try {
+             FileInputStream cacheFile = new FileInputStream("weathercache.ser");
+             ObjectInputStream objectReader = new ObjectInputStream(cacheFile);
+             cachedWeather = (WeatherInformationParsed) objectReader.readObject();
+             objectReader.close();
+             cacheFile.close();
+             return cachedWeather;
+         } catch (Exception e) {
+             e.printStackTrace();
+             return cachedWeather;
+         }
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })	//suppresses type warnings
@@ -46,10 +87,11 @@ public class WeatherGet {
     	
     	//clean parsed JSON into usable information
         WeatherInformationParsed toReturn = new WeatherInformationParsed();	//cleaned object
-        
+
         //location data
         toReturn.setCityName(wd.getCity().getName());
         toReturn.setCountryName(wd.getCity().getCountry());
+        toReturn.setPopulation(wd.getCity().getPopulation());
         
         weatherForADay[] newArray = new weatherForADay[5];	//structure for each day obtained from the API
         
@@ -115,6 +157,7 @@ public class WeatherGet {
             thisPeriod.setWindSpeed(thisPeriodOld.getWind().getSpeed());
             thisPeriod.setWindDirection(thisPeriodOld.getWind().getDeg());
             
+            //for when rain data isn't available
             try {
             	thisPeriod.setRainAmount(thisPeriodOld.getRain().getAmount());
             } catch (Exception e) {

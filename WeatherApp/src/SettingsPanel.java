@@ -1,13 +1,20 @@
 //necessary imports
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.TreeSet;
-import com.github.lgooddatepicker.components.TimePicker;
 
 public class SettingsPanel extends JPanel {
 	
@@ -15,7 +22,7 @@ public class SettingsPanel extends JPanel {
 	private MainScreen returnPanel;	//main screen to return to
 	
 	//elements of the interface
-	private TimePicker timeSelector;
+	private JSpinner timePicker;
     private JComboBox<String> durationDropdown;
     private JComboBox<WeatherEnum> weatherDropdown;
     private JComboBox<String> locationDropdown;
@@ -26,7 +33,7 @@ public class SettingsPanel extends JPanel {
     
     //getters and setters
     public LocalTime getPreferredTime() {
-        return timeSelector.getTime();
+        return LocalDateTime.ofInstant(((Date) timePicker.getValue()).toInstant(), ZoneId.systemDefault()).toLocalTime();
     }
 
     public Duration getDurationOfCycle() {
@@ -46,7 +53,9 @@ public class SettingsPanel extends JPanel {
     private void addLabel(String text) {
     	//adds a label of text
         JLabel l = new JLabel(text);
-        l.setAlignmentX(Component.CENTER_ALIGNMENT);
+        l.setHorizontalAlignment(JLabel.CENTER);
+        l.setVerticalAlignment(JLabel.CENTER);
+        l.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
         this.add(l);
     }
 
@@ -61,14 +70,13 @@ public class SettingsPanel extends JPanel {
     	//update settings
     	Settings.setDuration(getDurationOfCycle());
     	Settings.setLocation(getLocationName());
-    	Settings.setpreferredWeather(getPreferredWeather());
+    	Settings.setPreferredWeather(getPreferredWeather());
     	Settings.setStartTime(getPreferredTime());
     	
     	returnPanel.updateData();	//update according to new settings
     	
     	//switch panels
     	returnPanel.panelMain.setVisible(true);
-    	returnPanel.remove(this);
     	returnPanel.add(returnPanel.panelMain);
     	this.setVisible(false);
     }
@@ -83,38 +91,51 @@ public class SettingsPanel extends JPanel {
 	        
 	        //each preference
 	        addLabel("Preferred Time");
-	        timeSelector = new TimePicker();
-	        timeSelector.setTimeToNow();
-	        timeSelector.setOpaque(false);
-	        addCenteredComponent(timeSelector);
+	        Date date = Date.from(Settings.getStartTime().atDate(LocalDate.of(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH)).atZone(ZoneId.systemDefault()).toInstant());
+	        SpinnerDateModel sdm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
+	        timePicker = new JSpinner(sdm);
+	        JSpinner.DateEditor de = new JSpinner.DateEditor(timePicker, "HH:mm");
+	        de.getTextField().setHorizontalAlignment(JTextField.CENTER);
+	        timePicker.setEditor(de);
+	        timePicker.setFont(new Font("character", Font.BOLD | Font.ITALIC, 23));
+	        timePicker.getEditor().getComponent(0).setBackground(new Color(198, 240, 254, 255));
+	        addCenteredComponent(timePicker);
 
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
-	        durationDropdown.setSelectedIndex(0);
-	        durationDropdown.setOpaque(false);
+	        durationDropdown.setSelectedItem(Settings.getDuration());
+	        durationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+	        ((JLabel) durationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+	        durationDropdown.setBackground(new Color(198, 240, 254, 100));
 	        addCenteredComponent(durationDropdown);
 
 	        addLabel("Preferred Weather");
 	        weatherDropdown = new JComboBox<WeatherEnum>(WeatherEnum.values());
-	        weatherDropdown.setSelectedIndex(0);
-	        weatherDropdown.setOpaque(false);
+	        weatherDropdown.setSelectedItem(Settings.getPreferredWeather());
+	        weatherDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+	        ((JLabel) weatherDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+	        weatherDropdown.setBackground(new Color(198, 240, 254, 100));
 	        addCenteredComponent(weatherDropdown);
 
 	        addLabel("Your Location");
 	        locationDropdown = new JComboBox<String>(cities.toArray(new String[0]));
-	        locationDropdown.setSelectedIndex(0);
-	        locationDropdown.setOpaque(false);
+	        locationDropdown.setSelectedItem(Settings.getLocation());
+	        locationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
+	        ((JLabel) locationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+	        locationDropdown.setBackground(new Color(198, 240, 254, 255));
 	        addCenteredComponent(locationDropdown);
 	        
 	        //back to main screen
 	        backButton = new JButton();
-	        backButton.setText("Back");
-	        backButton.setBorder(new MatteBorder(0, 2, 2, 0, new Color(198, 240, 254)));
-	        backButton.setBorderPainted(true);
-	        backButton.setOpaque(false);
-	        backButton.setContentAreaFilled(false);
-	        addCenteredComponent(backButton);
-	        backButton.addActionListener(actionEvent -> backToHome());	//click event
+	        BufferedImage img = ImageIO.read(new File("resources/cc3backbygoogle.png"));
+	        backButton.setIcon(new ImageIcon(img.getScaledInstance((int) (img.getWidth() * 1.5), (int) (img.getHeight() * 1.5), 0)));
+	        backButton.setHorizontalAlignment(JButton.LEFT);
+	        backButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
+		    backButton.setBorderPainted(true);
+		    backButton.setOpaque(false);
+		    backButton.setContentAreaFilled(false);
+		    addCenteredComponent(backButton);
+		    backButton.addActionListener(actionEvent -> backToHome());	//click event
 	        
 		} catch (IOException e) {
 			//if file not found
