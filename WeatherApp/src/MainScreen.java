@@ -145,7 +145,7 @@ public class MainScreen extends JFrame {
     	super(title);	//sets title
     	panelMain.setLayout(new GridLayout(4, 0));	//layout
     	panelMain.setOpaque(false);	//allows background
-
+        todayButton = new JPanel(new GridLayout(0, 3));
     	//parse JSON
     	try {
 			wiP = WeatherGet.run("London");
@@ -172,26 +172,30 @@ public class MainScreen extends JFrame {
     		btn.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[j + 1]));
     	}
     	*/
-        
+
         //add image icons to each button
         addIcon(settingButton, SETTINGS_ICON_PATH);
-
+        double average = getAverageWind(wiP.getWeatherPerDay()[0]);
+        JLabel averageWind = new JLabel(Double.toString(average), SwingConstants.CENTER);
+        averageWind.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
+        averageWind.setHorizontalTextPosition(SwingConstants.CENTER);
+        averageWind.setVerticalTextPosition(SwingConstants.CENTER);
         JButton icon = new JButton();
         addIcon(icon, wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
         icon.setOpaque(false);
         icon.setContentAreaFilled(false);
         icon.setBorderPainted(false);
-        JLabel descriptionText = new JLabel();
+
         
         //today button information is added
         String today = wiP.getWeatherPerDay()[0].getDayOfWeek();
         double todayTemp = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]))) / 100;
-        descriptionText.setText(convertToMultiline("Today" + "\n" + todayTemp + " °C"));
+        JLabel descriptionText = new JLabel(convertToMultiline("Today" + "\n" + todayTemp + " °C"), SwingConstants.CENTER);
 
         descriptionText.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
-        descriptionText.setHorizontalTextPosition(0);
-        descriptionText.setVerticalTextPosition(1);
-
+        descriptionText.setHorizontalTextPosition(SwingConstants.CENTER);
+        descriptionText.setVerticalTextPosition(SwingConstants.CENTER);
+        todayButton.add(averageWind);
         todayButton.add(icon);
         todayButton.add(descriptionText);
 
@@ -273,7 +277,17 @@ public class MainScreen extends JFrame {
         panelMain.setVisible(true);	//make content visible
         
     }
-
+    private double getAverageWind(weatherForADay todayWeather)
+    {
+        int number = 0;
+        double sum = 0;
+        for (int i = 0; i < todayWeather.getList().size(); i++)
+        {
+            sum += todayWeather.getList().get(i).getWindSpeed();
+            number++;
+        }
+        return sum / number;
+    }
     private double getMinimumTemperature(weatherForADay todayWeather) {
     	//linear search for min temp
         double minTemp = Double.POSITIVE_INFINITY;
