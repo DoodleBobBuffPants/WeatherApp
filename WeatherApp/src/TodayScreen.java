@@ -15,7 +15,7 @@ public class TodayScreen extends JPanel {
     public TodayScreen(MainScreen returnPanel, weatherForADay weather) {
     	
     	//initialise variables
-    	this.returnPanel = returnPanel;
+    	this.returnPanel = returnPanel; //Sets panel to (will be the one back button connects to)
 		this.todayWeather = weather;
 		 
 		this.setOpaque(false);	//allows background
@@ -24,7 +24,7 @@ public class TodayScreen extends JPanel {
         
         this.setSize(600,  800);
         
-        //add elements
+        //add elements to their respective positoins in grid layout
         this.add(createTop(todayWeather.getDayOfWeek(), getMaximumTemperature(), getMinimumTemperature()));
         this.add(createCentre());
         this.add(createBottom());
@@ -34,7 +34,7 @@ public class TodayScreen extends JPanel {
     }
 
     private double getMinimumTemperature() {
-    	//linear search for min temp
+    	//linear search for min temp of the day
         double minTemp = Double.POSITIVE_INFINITY;
         for (int i = 0; i < todayWeather.getList().size(); i++) {
             if (todayWeather.getList().get(i).getTemp_min() < minTemp)
@@ -44,7 +44,7 @@ public class TodayScreen extends JPanel {
     }
 
     private double getMaximumTemperature() {
-    	//linear search for max temp
+    	//linear search for max temp of the day
         double maxTemp = Double.NEGATIVE_INFINITY;
         for (int i = 0; i < todayWeather.getList().size(); i++) {
             if (todayWeather.getList().get(i).getTemp_min() > maxTemp)
@@ -54,20 +54,20 @@ public class TodayScreen extends JPanel {
     }
     
     private void backToMain() {
-    	
-    	//switch screens
+    	//switch screen to main
     	returnPanel.panelMain.setVisible(true);
     	returnPanel.add(returnPanel.panelMain);
     	this.setVisible(false);
     }
 
     private JPanel createBottom() {
-    	
-    	//bottom to return to main screen
+    	//Creates the bottom panel
+
         JPanel bottom = new JPanel();
         bottom.setOpaque(false);
         bottom.setLayout(new GridLayout(1, 1));
 
+        //Prepare the back button
         ImageIcon back = new ImageIcon("resources/cc3backbygoogle.png");
         Image bTemp = back.getImage();
         bTemp = bTemp.getScaledInstance(back.getIconWidth() * 2, back.getIconHeight() * 2, Image.SCALE_SMOOTH);
@@ -77,7 +77,8 @@ public class TodayScreen extends JPanel {
         backbutton.setOpaque(false);
         backbutton.setContentAreaFilled(false);
         backbutton.setHorizontalAlignment(JButton.LEFT);
-        
+
+        //Add functionality to the back button
         backbutton.addActionListener(actionEvent -> backToMain());
 
         bottom.add(backbutton);
@@ -134,6 +135,8 @@ public class TodayScreen extends JPanel {
         varLbl.setBorder(new EmptyBorder(20, 10, 20, 10));
         center.add(varLbl);
 
+        //Generate data to input into each table entry
+        //Table is represented using gridLayout
         for (int i = 0; i < index; i++) {
 
             JLabel time = new JLabel(periodData.get(i).getTime().toString());

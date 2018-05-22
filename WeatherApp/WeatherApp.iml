@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jackson-annotations-2.9.0.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jackson-core-2.9.5.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jackson-databind-2.9.5.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/commons-codec-1.10.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/commons-logging-1.2.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/fluent-hc-4.5.5.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpclient-4.5.5.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpclient-cache-4.5.5.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpclient-win-4.5.5.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpcore-4.4.9.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/httpmime-4.5.5.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jna-4.4.0.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/jna-platform-4.4.0.jar" />
+    <libelement value="file://D:/Users/AJayS/Documents/Work/InteractionDesign/WeatherApp/WeatherApp/Dependencies/LGoodDatePicker-10.3.1.jar" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/Dependencies" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/Dependencies" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>
