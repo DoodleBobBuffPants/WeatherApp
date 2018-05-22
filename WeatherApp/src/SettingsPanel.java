@@ -107,6 +107,7 @@ public class SettingsPanel extends JPanel {
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
 	        durationDropdown.setSelectedItem(Settings.getDuration());
+	        //Change font for more aesthetic design
 	        durationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
 	        ((JLabel) durationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 	        durationDropdown.setBackground(new Color(198, 240, 254, 100));
