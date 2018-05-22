@@ -89,7 +89,7 @@ public class SettingsPanel extends JPanel {
     	try {
 			TreeSet<String> cities = CityParse.parse();	//all locations
 			this.returnPanel = returnPanel;	//panel to go back to
-	        this.setLayout(new GridLayout(9, 1));	//layout
+	        this.setLayout(new GridLayout(9, 1)); //Set the layout to a grid layout
 	        
 	        //each preference
 	        addLabel("Preferred Time");
