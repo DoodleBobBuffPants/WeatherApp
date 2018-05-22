@@ -202,6 +202,15 @@ public class MainScreen extends JFrame {
             currentBtn.setBounds(i * SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 4, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
             nextBtns.add(currentBtn);
         }
+        
+        String bgName = wiP.getWeatherPerDay()[0].getList().get(0).getWeatherForBackground();
+        try {
+            bImg = ImageIO.read(new File("resources/" + bgName + ".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bImg = bImg.getScaledInstance(panelMain.getWidth(), panelMain.getHeight(), Image.SCALE_SMOOTH);
+        bg.setIcon(new ImageIcon(bImg));
 
         panelMain.add(todayButton);
         panelMain.add(nextBtns);
