@@ -20,7 +20,11 @@ public class MainScreen extends JFrame {
 	//elements for interface
     private JButton settingButton = new JButton();
     private JButton checkJourneyButton = new JButton();
-    private JPanel todayButton = new JPanel();
+
+
+    private JPanel todayButton = new JPanel(); // today bit panel
+
+    //panels for each of the next days - this needs to be cleared on updating
     private JPanel NextDay1Btn = new JPanel();
     private JPanel NextDay2Btn = new JPanel();
     private JPanel NextDay3Btn = new JPanel();
@@ -28,7 +32,8 @@ public class MainScreen extends JFrame {
     private JPanel nextBtns = new JPanel();
     private JLabel tText;
     private JLabel bText;
-    
+
+    // main panel
     public JPanel panelMain = new JPanel(); 
     public Image bImg;
     public JLabel bg = new JLabel();
@@ -85,6 +90,7 @@ public class MainScreen extends JFrame {
 		try {
 			wiP = WeatherGet.run(Settings.getLocation());
 			for (int i = 0; i < wiP.getWeatherPerDay().length; i++) {
+			    // sorts the times of the data - this is important in getting the icons for the middle of the day
                 Collections.sort(wiP.getWeatherPerDay()[i].getList(), (p1, p2) -> p1.getTime().getHour() - p2.getTime().getHour());
             }
 		} catch (IOException e) {
@@ -104,20 +110,23 @@ public class MainScreen extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 launchDailyScreen(wiP.getWeatherPerDay()[0]);
             }
-        });
+        }); // this is a click event - launches if the panel is clicked
         
         //get wind data, format it and add it
         double windAv = getAverageWind(wiP.getWeatherPerDay()[0]);
 
+        // format it to 2dp (max)
         DecimalFormat formatter = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
         formatter.setRoundingMode(RoundingMode.UP);
         String sWind = formatter.format(windAv);
 
+        // The today part is gridlayout with wind bit on the first column, icon and label in the second and the temperature on the third
         JLabel averageWind = new JLabel(sWind + " m/s", SwingConstants.CENTER);
         averageWind.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
         averageWind.setHorizontalTextPosition(SwingConstants.CENTER);
         averageWind.setVerticalTextPosition(SwingConstants.CENTER);
-        
+
+        // Today bit
         JButton todayIcon = new JButton();
         todayIcon.setText("Today");
         todayIcon.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
@@ -125,16 +134,15 @@ public class MainScreen extends JFrame {
         todayIcon.setVerticalTextPosition(SwingConstants.TOP);
 
         ImageIcon temp = new ImageIcon(wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
-        Image newimg = temp.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        Image newimg = temp.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH); // resizes the image to correct size
         todayIcon.setIcon(new ImageIcon(newimg));
-
         todayIcon.setOpaque(false);
         todayIcon.setContentAreaFilled(false);
         todayIcon.setBorderPainted(false);
 
         //today button information is added
         double todayTemp = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]))) / 100;
-        JLabel descriptionText = new JLabel(convertToMultiline(todayTemp + " °C"), SwingConstants.CENTER);
+        JLabel descriptionText = new JLabel((todayTemp + " °C"), SwingConstants.CENTER);
         
         descriptionText.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
         descriptionText.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -156,10 +164,12 @@ public class MainScreen extends JFrame {
             btnWeek.setContentAreaFilled(false);
             btnWeek.setBorderPainted(false);
             final int j = i;
+
+            // action listener is added - for clicks it needs to open the correct screen
             btnWeek.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[j + 1]));
 
             String day = wiP.getWeatherPerDay()[i + 1].getDayOfWeek();
-            addIcon(btnWeek, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());	//icon for this button
+            addIcon(btnWeek, wiP.getWeatherPerDay()[i + 1].getList().get(3).getIconPath().toString());	// icon for this button (size is correct automatically)
 
             double temperature = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[i+1]) + getMinimumTemperature(wiP.getWeatherPerDay()[i+1]))) / 100;	//temperature to 2 d.p.
             btnWeek.setText(day);	//button text
@@ -192,6 +202,15 @@ public class MainScreen extends JFrame {
             currentBtn.setBounds(i * SCREEN_WIDTH / 4, 3 * SCREEN_HEIGHT / 4, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4);
             nextBtns.add(currentBtn);
         }
+        
+        String bgName = wiP.getWeatherPerDay()[0].getList().get(0).getWeatherForBackground();
+        try {
+            bImg = ImageIO.read(new File("resources/" + bgName + ".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bImg = bImg.getScaledInstance(panelMain.getWidth(), panelMain.getHeight(), Image.SCALE_SMOOTH);
+        bg.setIcon(new ImageIcon(bImg));
 
         panelMain.add(todayButton);
         panelMain.add(nextBtns);
@@ -257,7 +276,7 @@ public class MainScreen extends JFrame {
         todayIcon.setVerticalTextPosition(SwingConstants.TOP);
 
         ImageIcon temp = new ImageIcon(wiP.getWeatherPerDay()[0].getList().get(3).getIconPath().toString());
-        Image newimg = temp.getImage().getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH ) ;
+        Image newimg = temp.getImage().getScaledInstance( 150, 150,  java.awt.Image.SCALE_SMOOTH ) ; // resize image
         todayIcon.setIcon(new ImageIcon(newimg));
         todayIcon.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[0]));
 
@@ -267,7 +286,7 @@ public class MainScreen extends JFrame {
         
         //today button information is added
         double todayTemp = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]))) / 100;
-        JLabel descriptionText = new JLabel(convertToMultiline(todayTemp + " °C"), SwingConstants.CENTER);
+        JLabel descriptionText = new JLabel((todayTemp + " °C"), SwingConstants.CENTER);
 
         descriptionText.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 21));
         descriptionText.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -403,10 +422,7 @@ public class MainScreen extends JFrame {
         return maxTemp;
     }
     
-    public String convertToMultiline(String orig) {
-        return "<html>" + orig.replaceAll("\n", "<br>");
-    }
-    
+
     private void setBorderColors() {
     	//styles buttons
     	settingButton.setBorder(new MatteBorder(2, 2, 2, 2, new Color(198, 240, 254)));
