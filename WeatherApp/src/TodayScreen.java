@@ -136,6 +136,7 @@ public class TodayScreen extends JPanel {
         center.add(varLbl);
 
         //Generate data to input into each table entry
+        //Table is represented using girdLayout
         for (int i = 0; i < index; i++) {
 
             JLabel time = new JLabel(periodData.get(i).getTime().toString());
