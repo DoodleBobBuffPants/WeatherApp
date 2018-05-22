@@ -89,10 +89,11 @@ public class SettingsPanel extends JPanel {
     	try {
 			TreeSet<String> cities = CityParse.parse();	//all locations
 			this.returnPanel = returnPanel;	//panel to go back to
-	        this.setLayout(new GridLayout(9, 1));	//layout
+	        this.setLayout(new GridLayout(9, 1)); //Set the layout to a grid layout
 	        
 	        //each preference
 	        addLabel("Preferred Time");
+	        //Creates a JSpinner for selecting a time. Effectively a dropdown without seeing all options at once
 	        Date date = Date.from(Settings.getStartTime().atDate(LocalDate.of(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH)).atZone(ZoneId.systemDefault()).toInstant());
 	        SpinnerDateModel sdm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
 	        timePicker = new JSpinner(sdm);
@@ -106,6 +107,7 @@ public class SettingsPanel extends JPanel {
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
 	        durationDropdown.setSelectedItem(Settings.getDuration());
+	        //Change font for more aesthetic design
 	        durationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
 	        ((JLabel) durationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 	        durationDropdown.setBackground(new Color(198, 240, 254, 100));
