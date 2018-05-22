@@ -18,6 +18,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Calendar;
 
+/**
+ * This class handles the API requesting
+ * It fetches the data from the {@see http://openweathermap.org/api} - the OpenWeatherMap API
+ */
 public class WeatherGet {
     
     public static WeatherInformationParsed run(String city) throws IOException {

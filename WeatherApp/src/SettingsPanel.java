@@ -33,6 +33,7 @@ public class SettingsPanel extends JPanel {
     
     //getters and setters
     public LocalTime getPreferredTime() {
+    	//Returns the value in the time picker, correctly accounting for time zones
         return LocalDateTime.ofInstant(((Date) timePicker.getValue()).toInstant(), ZoneId.systemDefault()).toLocalTime();
     }
 
@@ -53,6 +54,7 @@ public class SettingsPanel extends JPanel {
     private void addLabel(String text) {
     	//adds a label of text
         JLabel l = new JLabel(text);
+        //Centres the label in the grid layout
         l.setHorizontalAlignment(JLabel.CENTER);
         l.setVerticalAlignment(JLabel.CENTER);
         l.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
@@ -60,14 +62,14 @@ public class SettingsPanel extends JPanel {
     }
 
     private void addCenteredComponent(JComponent c) {
-    	//sets alignment
+    	//Aligns to centre horizontally in grid layout
         c.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(c);
     }
     
     private void backToHome() {
     	
-    	//update settings
+    	//Update the settings object, effectively saving the changes
     	Settings.setDuration(getDurationOfCycle());
     	Settings.setLocation(getLocationName());
     	Settings.setPreferredWeather(getPreferredWeather());
@@ -87,10 +89,11 @@ public class SettingsPanel extends JPanel {
     	try {
 			TreeSet<String> cities = CityParse.parse();	//all locations
 			this.returnPanel = returnPanel;	//panel to go back to
-	        this.setLayout(new GridLayout(9, 1));	//layout
+	        this.setLayout(new GridLayout(9, 1)); //Set the layout to a grid layout
 	        
 	        //each preference
 	        addLabel("Preferred Time");
+	        //Creates a JSpinner for selecting a time. Effectively a dropdown without seeing all options at once
 	        Date date = Date.from(Settings.getStartTime().atDate(LocalDate.of(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH)).atZone(ZoneId.systemDefault()).toInstant());
 	        SpinnerDateModel sdm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
 	        timePicker = new JSpinner(sdm);
@@ -104,6 +107,7 @@ public class SettingsPanel extends JPanel {
 	        addLabel("Duration of Cycle");
 	        durationDropdown = new JComboBox<String>(times);
 	        durationDropdown.setSelectedItem(Settings.getDuration());
+	        //Change font for more aesthetic design
 	        durationDropdown.setFont(new Font("charcoal", Font.BOLD | Font.ITALIC, 23));
 	        ((JLabel) durationDropdown.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 	        durationDropdown.setBackground(new Color(198, 240, 254, 100));
@@ -145,9 +149,9 @@ public class SettingsPanel extends JPanel {
     
     //singleton getter
     public static SettingsPanel getInstance(MainScreen returnPanel) {
-    	
+
+    	//If null, singleton hasn't been created for the first time yet, so construct now
     	if (singletonSettingsPanel == null) {
-    		//construct as needed
             singletonSettingsPanel = new SettingsPanel(returnPanel);
             singletonSettingsPanel.setSize(600, 800);
             singletonSettingsPanel.setOpaque(false);
