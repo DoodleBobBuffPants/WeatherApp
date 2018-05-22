@@ -103,6 +103,7 @@ public class MainScreen extends JFrame {
         nextBtns.removeAll();
         
         //reinitialise today button
+        todayButton.removeAll();
 		todayButton = new JPanel();
 		todayButton.setOpaque(false);
         todayButton.addMouseListener(new MouseAdapter() {
@@ -139,7 +140,8 @@ public class MainScreen extends JFrame {
         todayIcon.setOpaque(false);
         todayIcon.setContentAreaFilled(false);
         todayIcon.setBorderPainted(false);
-
+        todayIcon.addActionListener(actionEvent -> launchDailyScreen(wiP.getWeatherPerDay()[0]));
+        
         //today button information is added
         double todayTemp = Math.floor(50 * (getMaximumTemperature(wiP.getWeatherPerDay()[0]) + getMinimumTemperature(wiP.getWeatherPerDay()[0]))) / 100;
         JLabel descriptionText = new JLabel((todayTemp + " °C"), SwingConstants.CENTER);
