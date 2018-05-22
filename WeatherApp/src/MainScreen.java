@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Locale;
 
 public class MainScreen extends JFrame {
@@ -83,6 +85,15 @@ public class MainScreen extends JFrame {
     	//gets new data
 		try {
 			wiP = WeatherGet.run(Settings.getLocation());
+			for(int i = 0; i < wiP.getWeatherPerDay().length; i++)
+            {
+                Collections.sort(wiP.getWeatherPerDay()[i].getList(), new Comparator<weatherForAThreeHourlyPeriod>() {
+                    @Override
+                    public int compare(weatherForAThreeHourlyPeriod o1, weatherForAThreeHourlyPeriod o2) {
+                        return o1.getTime().compareTo(o2.getTime());
+                    }
+                });
+            }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -207,6 +218,15 @@ public class MainScreen extends JFrame {
     	//parse JSON
     	try {
 			wiP = WeatherGet.run(Settings.getLocation());
+            for(int i = 0; i < wiP.getWeatherPerDay().length; i++)
+            {
+                Collections.sort(wiP.getWeatherPerDay()[i].getList(), new Comparator<weatherForAThreeHourlyPeriod>() {
+                    @Override
+                    public int compare(weatherForAThreeHourlyPeriod o1, weatherForAThreeHourlyPeriod o2) {
+                        return o1.getTime().compareTo(o2.getTime());
+                    }
+                });
+            }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
