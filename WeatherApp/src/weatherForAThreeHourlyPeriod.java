@@ -7,6 +7,13 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.io.Serializable;
 
+/**
+ * Weather info for a period of three hours
+ * Used to provide a breakdown of information for any given day,
+ * with detailed info such as wind speed and temperature
+ *
+ *
+ */
 public class weatherForAThreeHourlyPeriod implements Serializable {
 	
 	//variables corresponding to data from API
@@ -23,7 +30,9 @@ public class weatherForAThreeHourlyPeriod implements Serializable {
     private double windDirection = 0;
     private double rainAmount = 0;
 
-    //setters and getters for data
+    /**
+     * @return The appropriate (relative) filename to be used for the background of the main screen
+     */
     public String getWeatherForBackground() {
         return weatherForBackground;
     }
