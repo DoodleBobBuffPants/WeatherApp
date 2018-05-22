@@ -91,7 +91,7 @@ public class SettingsPanel extends JPanel {
 			this.returnPanel = returnPanel;	//panel to go back to
 	        this.setLayout(new GridLayout(9, 1));	//layout
 	        
-	        //each preference
+	        //each preference 
 	        addLabel("Preferred Time");
 	        Date date = Date.from(Settings.getStartTime().atDate(LocalDate.of(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH)).atZone(ZoneId.systemDefault()).toInstant());
 	        SpinnerDateModel sdm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
